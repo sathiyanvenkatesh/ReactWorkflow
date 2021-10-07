@@ -6,7 +6,6 @@ export default configureStore({
   reducer:{
       user:userReducer,   // user is store name from usersclice
       svc:svcReducer
-
   } ,
 
 });

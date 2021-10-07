@@ -15,13 +15,9 @@ import {useDispatch, useSelector} from 'react-redux';
         const [password, setPassword] = useState("");
         const user=localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
         console.log("inside Login"+JSON.stringify(user));
-        
-
          const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store 
         // const history=useHistory()
-        const {/*loading, */hasErrors}=useSelector(selectUser);
-         
-        
+        const {/*loading, */hasErrors} = useSelector(selectUser);
       
         function validateForm() {
           return name.length > 0 && password.length > 0;
