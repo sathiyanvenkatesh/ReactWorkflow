@@ -154,9 +154,7 @@ const customStyles = {
       const payload = {type:"success",headerText:"Message",bodyText:result.data,saveButton:false};
       dispatch(setAlertBox(payload))
       dispatch(getOpen());
-      dispatch(fetchSvcs(JSON.stringify(values)));
-      
-      dispatch(approveORrejectFailure())
+      dispatch(fetchSvcs(JSON.stringify(values)));     
     },error => {
       dispatch(approveORrejectFailure())
     })

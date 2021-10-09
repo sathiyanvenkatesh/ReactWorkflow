@@ -1,18 +1,33 @@
 import React, { useState, useEffect } from 'react'
-import { getSVCbyId, svcsSelector } from "../../redux-sclice/SvcSclice";
+import { getSVCbyId, svcsSelector,approveORrejectSucess,approveORrejectFailure } from "../../redux-sclice/SvcSclice";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow'
+import axios from 'axios';
+
+//const DEVMANAGER = ['Manager1', 'Manager2'];
+const RISKAPPROER=['RiskApp1','RiskApp2','RiskApp3']
+const VRESIONCONTROLPROVIDER=['Provider1','Provider2']
 
 
 function SvcApprove() {
 
-
-  //const user=localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
+  const { svcDetails/*,hasErrors*/ } = useSelector(svcsSelector)
+  const user=localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
   const { id } = useParams();
   console.log("id" + id);
   const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store 
-  const { svcDetails/*,hasErrors*/ } = useSelector(svcsSelector)
+  const [values, setValues] = useState({
+    requestId: id, unitManger: svcDetails.unitManger, userId: user.name,remarks:'',accessProvider:'',rarId:''
+  });
+
+  const set = name => {
+    return ({ target: { value } }) => {
+      setValues(oldValues => ({ ...oldValues, [name]: value }));
+    }
+  };
+
+  
   useEffect(() => {
     //dispatch(getSVCbyId(id) )
     fetchSVCDetailsById()
@@ -50,14 +65,36 @@ function SvcApprove() {
 
   const handleSubmit = event => {
     event.preventDefault();
-    const payload = {type:"success",headerText:"Message",bodyText:"Validation check",saveButton:false};
-    dispatch(setAlertBox(payload))
-    dispatch(getOpen());
-    //event.preventDefault();
-    //if(handleValidation){
-    // dispatch(createNewSvcRequest(JSON.stringify(values)) )
-    // }
+    console.log(values);
+
+    apicallForUserRequest(values).then( result => {
+      console.log(result)
+      const payload = {type:"success",headerText:"Message",bodyText:result.data,saveButton:false};
+      dispatch(setAlertBox(payload))
+      dispatch(getOpen());
+      dispatch(getSVCbyId(values.requestId));     
+    },error => {
+      dispatch(approveORrejectFailure(error))
+    })
+    
   }
+
+  const apicallForUserRequest = (values) => {
+    const headers = {
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': "*"
+    }
+    const valuesoption = {
+      'approver_Unit_Dev_Mngr': 'Y',
+      'remarks': 'ok'
+    }
+
+    return axios.post('https://conv.rakbankonline.ae/eida/svc-local/api/v1/svc/approveorrejct/' +values.requestId+ '/' +"apillai", valuesoption, {
+      headers: headers
+    })
+    }
+
+
 
 
   //render() {
@@ -138,60 +175,77 @@ function SvcApprove() {
             </div>
           </div>
 
-          <div className="col-md-12 p-0 mt-2">
+         <div className="col-md-12 p-0 mt-2">
              <h5 className="font-weight-bold">Approvals</h5>
              <div className="form-group row p-0 mb-3">
               <label htmlFor="devmgr" className="col-sm-2 col-form-label text-danger">Development Manager</label>
-              <div className="form-check col-sm-4">
-                <input type="text" className="form-control" id="devmgr" value={svcDetails.unitManger} disabled />
-              </div>
+                  <div className="form-check col-sm-4">
+                    <input type="text" className="form-control" id="devmgr"  value={svcDetails.unitManger} disabled />
+                  </div>
             </div>
 
             <div className="form-group row p-0 mb-3">
               <label htmlFor="devmgr" className="col-sm-2 col-form-label text-danger">Approved</label>
               <div className="form-check col-sm-4">
-              <input className="form-radio-input mr-1" type="radio" value="Y" checked={svcDetails.unitManagerApprival === 'ok'} id="approved" name="appstatus" />   <span>Yes</span>
-                    <input className="form-radio-input ml-2 mr-1" type="radio" value="N" checked={svcDetails.unitManagerApprival !== 'ok'} id="rejected" name="appstatus" /> <span>No</span>
+              <input className="form-radio-input mr-1" type="radio" value="Y"  defaultChecked={svcDetails.unitManagerApprival === 'ok'} id="approved" name="appstatus" />   <span>Yes</span>
+                    <input className="form-radio-input ml-2 mr-1" type="radio" value="N" defaultChecked={svcDetails.unitManagerApprival !== 'ok'} id="rejected" name="appstatus" /> <span>No</span>
               </div>
             </div>
+           </div>
 
-            <div className="form-group row p-0 mb-3">
+         { svcDetails.requestStatus==='APD1' &&( <div><div className="form-group row p-0 mb-3">
               <label htmlFor="devmgr" className="col-sm-2 col-form-label text-danger">Risk Assurance Review</label>
               <div className="form-check col-sm-4">
-                <input type="text" className="form-control" id="rarmgr" value={svcDetails.rarId} disabled />
+                <select id="riskassurancereview" className="form-control" value={values.rarid} onChange={set('riskassurancereview')} >
+                <option >Select Access Provider </option>
+                {RISKAPPROER.map(r => <option key={r}>{r}</option>)}
+              </select>
               </div>
             </div>
 
             <div className="form-group row p-0 mb-3">
               <label htmlFor="devmgr" className="col-sm-2 col-form-label text-danger">Reviewed</label>
               <div className="form-check col-sm-4 d-flex align-items-center">
-              <input className="form-radio-input mr-1" type="radio" value="Y" checked={svcDetails.rarApproval === 'ok'} id="approved" name="rarstatus" />  <span>Yes</span>
-              <input className="form-radio-input ml-2 mr-1" type="radio" value="N" checked={svcDetails.rarApproval !== 'ok'} id="rejected" name="rarstatus" /> <span>No</span>
+              <input className="form-radio-input mr-1" type="radio" value="Y" defaultChecked={svcDetails.rarApproval === 'ok'} id="approved" name="rarstatus" />  <span>Yes</span>
+              <input className="form-radio-input ml-2 mr-1" type="radio" value="N" defaultChecked={svcDetails.rarApproval !== 'ok'} id="rejected" name="rarstatus" /> <span>No</span>
               </div>
-            </div>
-
-            <div className="form-group row p-0 mb-3">
+            </div></div>
+         )}
+          
+          
+          { svcDetails.requestStatus==='APD2' &&( <div> <div className="form-group row p-0 mb-3">
               <label htmlFor="devmgr" className="col-sm-2 col-form-label text-danger">Access Provider</label>
-              <div className="form-check col-sm-4">
-                <input type="text" className="form-control" id="rarmgr" value={svcDetails.accessProvider} disabled />
+              <div className="form-check col-sm-4">               
+                <select id="accessProvider" className="form-control" value={values.accessProvider} onChange={set('accessProvider')} >
+                <option >Select Access Provider </option>
+                {VRESIONCONTROLPROVIDER.map(v => <option key={v}>{v}</option>)}
+              </select>
               </div>
             </div>
-          </div>
+          
 
           <div className="form-group row p-0 mb-3">
               <label htmlFor="devmgr" className="col-sm-2 col-form-label text-danger">Approved</label>
               <div className="form-check col-sm-4 d-flex align-items-center">
-              <input className="form-radio-input mr-1" type="radio" value="Y" checked={svcDetails.accessProviderApproval === 'ok'} id="approved" name="accstatus" /> <span>Yes</span>
-              <input className="form-radio-input ml-2 mr-1" type="radio" value="N" checked={svcDetails.accessProviderApproval !== 'ok'} id="rejected" name="accstatus" /><span>No</span>
+              <input className="form-radio-input mr-1" type="radio" value="Y" defaultChecked={svcDetails.accessProviderApproval === 'ok'} id="approved" name="accstatus" /> <span>Yes</span>
+              <input className="form-radio-input ml-2 mr-1" type="radio" value="N" defaultChecked={svcDetails.accessProviderApproval !== 'ok'} id="rejected" name="accstatus" /><span>No</span>
 
               </div>
-            </div>
+          </div></div>)}
+          
          
+            <div className="form-row">
+            <div className="form-group col-md-12 ">
+              <label htmlFor="remarks" className="text-danger"><h6>Remarks</h6></label>
+              <textarea className="form-control" id="remaks" value={values.remarks} onChange={set('remarks')} ></textarea>
+            </div>
+
+          </div>
         
           <div className="form-row">
             <div className="form-group col-md-12 ">
-              <label htmlFor="remarks" className="text-danger"><h6>All Remarks</h6></label>
-              <textarea className="form-control" id="remaks" value={svcDetails.allRemarks}  ></textarea>
+              <label htmlFor="allremarks" className="text-danger"><h6>All Remarks</h6></label>
+              <textarea className="form-control" id="allremaks" value={svcDetails.allRemarks}  ></textarea>
             </div>
 
           </div>

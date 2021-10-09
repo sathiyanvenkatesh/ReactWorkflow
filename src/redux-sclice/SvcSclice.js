@@ -42,7 +42,7 @@ export const initialState = {
         state.hasErrors=true
       },
       svcUpdateSuccess:(state,{payload})=>{
-         state.svcupdateresult=JSON.stringify(payload)
+         state.svcupdateresult=JSON.stringify(payload.data)
          state.loading=false
          state.hasErrors=false  
       },

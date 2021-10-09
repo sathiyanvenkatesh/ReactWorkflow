@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createNewSvcRequest, svcsSelector } from "../../redux-sclice/SvcSclice";
+import { paramSelector,fetchDevManagers} from "../../redux-sclice/ParamsSlice";
 import { useDispatch, useSelector } from 'react-redux';
 //import { Redirect } from 'react-router';
 import { useHistory } from 'react-router-dom';
+import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow'
 
-import { Container } from 'react-bootstrap';
-import { toast } from 'react-toastify';
+//import { Container } from 'react-bootstrap';
+//import { toast } from 'react-toastify';
 //import 'react-toastify/dist/ReactToastify.css';
 
 const TOOLS = ['Aldo', 'SVN', 'VSS', 'Git'];
@@ -14,11 +16,7 @@ const DEVMANAGER = ['Manager1', 'Manager2']
 
 
 function SvcNewRequest() {
-
-  const toastId = React.useRef(null);
-
   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
-
   const [values, setValues] = useState({
     requestId: '', tool: '', requestorName: user.name, requestDate: '', applicationName: '', version: '', durationFrom: '', durationTo: '',
     reasonforReq: '', checkOut: "N", checkIn: "N", unitManger: '', checkInReq: "N", deployment: "N", emergencyCheck: "Y", fromArchive: "N", getLatest: "Y",
@@ -29,10 +27,24 @@ function SvcNewRequest() {
   //const navigate1 = useNavigate()
   // toast.configure();
   const history = useHistory();
-  const { svcaddSucessflag, hasErrors, svcaddresult } = useSelector(svcsSelector)
+  const { svcaddSucessflag, hasErrors, svcaddresult } = useSelector(svcsSelector);
+  const {devmanagers} = useSelector(paramSelector)
+  useEffect(() => {
+    //dispatch(getSVCbyId(id) )
+    fetchSVCPaamDetails()
+    console.log('hi');
 
-  console.log('svcaddSucessflag' + svcaddSucessflag);
+  },[]);
 
+const fetchSVCPaamDetails = () => {
+  console.log('inside param methos' );
+  dispatch(fetchDevManagers());
+ // if(devmanagers!==undefined){
+  console.log("hi"+devmanagers);
+ // }
+}
+   
+  
   const set = name => {
     return ({ target: { value } }) => {
       setValues(oldValues => ({ ...oldValues, [name]: value }));
@@ -84,22 +96,20 @@ function SvcNewRequest() {
         draggablePercent:80
         
        });*/
+       const payload = {type:"success",headerText:"Info",bodyText:"SVC Request Created Successfully" + JSON.stringify(svcaddresult),saveButton:false};
+       dispatch(setAlertBox(payload))
+       dispatch(getOpen());
+
     history.push('/updatesvc/' + JSON.stringify(svcaddresult));
     // alert("SVC Added Successfully");
     //<ToastContainer/>
     // navigate1.navigate('/updatesvc/'+row.requestid)
   }
   if (!svcaddSucessflag && hasErrors) {
-    if(! toast.isActive(toastId.current)) {
-      toastId.current = toast.error("Error in Saving Request !", {
-      current:1,
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-    });
-  }
-
+   
+    const payload = {type:"Error",headerText:"Info",bodyText:"Error in creating SVC Request ",saveButton:false};
+    dispatch(setAlertBox(payload))
+    dispatch(getOpen());
   }
   //render() {
   return (

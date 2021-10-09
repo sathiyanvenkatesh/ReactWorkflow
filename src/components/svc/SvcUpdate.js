@@ -2,17 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { getSVCbyId, svcsSelector, udateSvcRequest} from "../../redux-sclice/SvcSclice";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
-//import { toast } from 'react-toastify';
 import { unwrapResult } from '@reduxjs/toolkit'
 import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow'
-
-//import 'react-toastify/dist/ReactToastify.css';
 const DEVMANAGER = ['Manager1', 'Manager2']
 
 
 function SvcUpdate() {
-
-  const toastId = React.useRef(null);
 
   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
   //const user=localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
@@ -25,17 +20,13 @@ function SvcUpdate() {
     requestId: id, unitManger: '', userId: user.name
   });
 
-  /*const set = name => {
-    return ({ target: { value } }) => {
-      setValues(oldValues => ({ ...oldValues, [name]: value }));
-    }
-  };*/
-
-  const set = (name) => {
+  const set = name => {
     return ({ target: { value } }) => {
       setValues(oldValues => ({ ...oldValues, [name]: value }));
     }
   };
+
+  
 
   useEffect(() => {
     //dispatch(getSVCbyId(id) )
@@ -53,37 +44,9 @@ function SvcUpdate() {
 
   }
 
-  console.log("svcDetails in update page " + JSON.stringify(svcDetails));
-  console.log(svcDetails.tool);
-  if (svcDetails !== '' && !hasErrors && svcupdateresult==='') {
-   /* if (!toast.isActive(toastId.current)) {
-      toastId.current = toast.success("SVC Request Created Successfully" + id, {
-        toastId: 'success1',
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        draggablePercent: 80
-      })
-    }*/
-    
-    const payload = {type:"success",headerText:"Info",bodyText:"SVC Request Created Successfully" + id,saveButton:false};
-    dispatch(setAlertBox(payload))
-    dispatch(getOpen());
-   // event.preventDefault();
-
-  }
-  /* const [values, setValues] = useState({  
-     requestId:svcDetails.requestId,tool:svcDetails.tool,requestorName:user.name,requestDate:svcDetails.requestDate,applicationName:svcDetails.applicationName,version:svcDetails.version,durationFrom:svcDetails.durationFrom,
-     durationTo:svcDetails.durationTo,
-     reasonforReq:svcDetails.requstorRemarks,checkOut:svcDetails.checkOut,checkIn:svcDetails.checkIn,unitManger:svcDetails.unitManger,checkInReq:"N",deployment:"N",emergencyCheck:"Y",fromArchive:"N",getLatest:"Y",
-     toOtherEnv:"N",userId:user.name
-   });
+  //console.log("svcDetails in update page " + JSON.stringify(svcDetails));
+  //console.log(svcDetails.tool);
   
-   
-  console.log("values"+JSON.stringify(values));*/
-
-
   const contaierstyle = {
     maxWidth: "1500px"
   }
@@ -97,7 +60,7 @@ function SvcUpdate() {
   }
 
   const handleSubmit = event => {
-    alert('clicked');
+   // alert('clicked');
     event.preventDefault();
     console.log("Update button clicked ");
     dispatch(udateSvcRequest(values));
@@ -105,12 +68,13 @@ function SvcUpdate() {
     // dispatch(createNewSvcRequest(JSON.stringify(values)) )
     // }
     console.log(values);
-    if(svcupdateresult!==''){
+   // if(svcupdateresult!==''){
       console.log('SVC Update'+svcupdateresult);
-      const payload = {type:"success",headerText:"Info",bodyText:"SVC Request Updated Successfully" ,saveButton:false};
+      //console.log('SVC Update'+svcupdateresult);
+      const payload = {type:"success",headerText:"Info",bodyText:svcupdateresult,saveButton:false};
        dispatch(setAlertBox(payload))
        dispatch(getOpen());
-    }
+   // }
 
   }
 
@@ -205,7 +169,7 @@ function SvcUpdate() {
               <div className="panel-body form-group row ">
                 <label htmlFor="unitManger" className="col-sm-3 col-form-label text-danger"><h6>Development Manager </h6></label>
                 <div className="form-check col-sm-3">
-                  <select id="unitManger" className="form-control" value={values.unitManger} /*onChange={set('unitManger')}*/onChange={() => {set('unitManger')}} >
+                  <select id="unitManger" className="form-control" value={values.unitManger} onChange={set('unitManger')}/*onChange={() => {set('unitManger')}}*/ >
                     <option >Select Dev Manager </option>
                     {DEVMANAGER.map(m => <option key={m} defaultValue={svcDetails.unitManger} >{m}</option>)}
                   </select>

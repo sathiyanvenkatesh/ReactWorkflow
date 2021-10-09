@@ -27,7 +27,8 @@ const paramsSlice = createSlice({
       state.hasErrors = true
     },
     getDevManagerSuccess: (state, { payload }) => {
-        state.recipes = payload
+      console.log(payload);
+        state.devmanagers = JSON.stringify(payload);
         state.loading = false
         state.hasErrors = false
       },
@@ -51,7 +52,7 @@ const paramsSlice = createSlice({
 export const { getParam, getToolsSuccess, getToolsFailure,getDevManagerSuccess,getDevManagerFailure,getApplicationNameSuccess,getApplicationNameFailure } = paramsSlice.actions
 
 // A selector
-export const recipesSelector = state => state.params
+export const paramSelector = state => state.params
 
 // The reducer
 export default paramsSlice.reducer
@@ -77,10 +78,10 @@ export function fetchDevManagers() {
       dispatch(getParam())
   
       try {
-        const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
+        const response = await fetch('https://conv.rakbankonline.ae/eida/svc-local/api/v1/approvals/SVC_UDM')
         const data = await response.json()
   
-        dispatch(getDevManagerSuccess(data.meals))
+        dispatch(getDevManagerSuccess(data))
       } catch (error) {
         dispatch(getDevManagerFailure())
       }
