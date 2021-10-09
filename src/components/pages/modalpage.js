@@ -14,15 +14,9 @@ const ModalPage = () => {
     const [savebutton, setsaveButton] = useState(false);
 
     useEffect(() => {
-        getAlertType(message)
+        console.log(message)
     }, [open])
-    const getAlertType = (type) => {
-        if (type === 1) {
-            setheaderText("Info")
-            setbodyText("Modal body text goes here.")
-            setsaveButton(false)
-        }
-    }
+ 
     function closeModal() {
         dispatch(getClose())
     }
@@ -32,17 +26,16 @@ const ModalPage = () => {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            {/* {getAlertType(message)} */}
-                            <h5 className="modal-title">{headerText}</h5>
+                            <h5 className={`modal-title ${(message.type === "error")?"text-danger":"text-success"}`} >{message.headerText}</h5>
                             <button type="button" className="close" onClick={() => closeModal()} aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
-                            <p>{bodyText}</p>
+                            <p>{message.bodyText}</p>
                         </div>
                         <div className="modal-footer">
-                            {savebutton && <button type="button" className="btn btn-primary" onClick={() => { dispatch(getClose()) }}>Save changes</button>}
+                            {message.saveButton && <button type="button" className="btn btn-primary" onClick={() => { dispatch(getClose()) }}>Save changes</button>}
                             <button type="button" className="btn btn-secondary" onClick={() => { dispatch(getClose()) }}>Close</button>
                         </div>
                     </div>

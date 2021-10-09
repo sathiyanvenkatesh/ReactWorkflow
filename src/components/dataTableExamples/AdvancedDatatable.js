@@ -11,7 +11,6 @@ const ActionComponent = ({  row, onClick  }) => {
  return <Button onClick={clickHandler}>Action</Button>;
 };
 const handleAction = () => row => { 
-  alert('Hi');
   console.log(row); 
 }
 

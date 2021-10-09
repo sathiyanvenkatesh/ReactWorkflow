@@ -10,12 +10,11 @@ export const popupSlice = createSlice({
         getClose:(state) => {
             state.open = false;
         },
-        setAlert:(state,action) => {
-            state.message = action.payload;
+        setAlertBox:(state,{payload}) => {
+            state.message = payload;
         }
-
     }
 })
 
-export const { getOpen, getClose, setAlert } = popupSlice.actions;
+export const { getOpen, getClose, setAlertBox } = popupSlice.actions;
 export default popupSlice.reducer;
