@@ -40,7 +40,7 @@ export const initialState = {
         state.hasErrors=true
       },
       svcUpdateSuccess:(state,{payload})=>{
-         state.svcupdateresult=payload
+         state.svcupdateresult=JSON.stringify(payload)
          state.loading=false
          state.hasErrors=false  
       },
@@ -203,12 +203,30 @@ return async dispatch =>{
 }
 
 
-export function  udateSvcRequest(){
+export function  udateSvcRequest(values){
   return async dispatch =>{
      try{
-       const response=await fetch('API URL')
-       const data = await response.json()
-       dispatch(svcUpdateSuccess(data))
+      // const response=await fetch('API URL')
+       //const data = await response.json()
+       console.log("values to pass update api "+values);
+
+       const headers = {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': "*"
+      }
+      const valuesoption ={
+        'approver_Unit_Dev_Mngr':values.unitManger
+      }
+  
+       axios.post('https://conv.rakbankonline.ae/eida/svc-local/api/v1/svc/request/'+values.requestId,valuesoption,{
+        headers: headers
+      })
+          .then(data =>  dispatch(svcUpdateSuccess(data)))
+          .catch(error => {
+               dispatch(svcUdateFailure())
+              console.error('There was an error!', error);
+          });
+
      }catch(error){
        dispatch(svcUdateFailure())
      }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getSVCbyId, svcsSelector } from "../../redux-sclice/SvcSclice";
+import { getSVCbyId, svcsSelector, udateSvcRequest} from "../../redux-sclice/SvcSclice";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 //import { toast } from 'react-toastify';
@@ -19,7 +19,7 @@ function SvcUpdate() {
   const { id } = useParams();
   console.log("id" + id);
   const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store 
-  const { svcDetails, hasErrors } = useSelector(svcsSelector)
+  const { svcDetails, hasErrors,svcupdateresult } = useSelector(svcsSelector)
 
   const [values, setValues] = useState({
     requestId: id, unitManger: '', userId: user.name
@@ -48,7 +48,7 @@ function SvcUpdate() {
 
   console.log("svcDetails in update page " + JSON.stringify(svcDetails));
   console.log(svcDetails.tool);
-  if (svcDetails !== '' && !hasErrors) {
+  if (svcDetails !== '' && !hasErrors && svcupdateresult==='') {
    /* if (!toast.isActive(toastId.current)) {
       toastId.current = toast.success("SVC Request Created Successfully" + id, {
         toastId: 'success1',
@@ -59,6 +59,7 @@ function SvcUpdate() {
         draggablePercent: 80
       })
     }*/
+    
     const payload = {type:"success",headerText:"Info",bodyText:"SVC Request Created Successfully" + id,saveButton:false};
     dispatch(setAlertBox(payload))
     dispatch(getOpen());
@@ -92,10 +93,17 @@ function SvcUpdate() {
     alert('clicked');
     event.preventDefault();
     console.log("Update button clicked ");
+    dispatch(udateSvcRequest(values));
     //if(handleValidation){
     // dispatch(createNewSvcRequest(JSON.stringify(values)) )
     // }
     console.log(values);
+    if(svcupdateresult!==''){
+      console.log('SVC Update'+svcupdateresult);
+      const payload = {type:"success",headerText:"Info",bodyText:"SVC Request Updated Successfully" ,saveButton:false};
+       dispatch(setAlertBox(payload))
+       dispatch(getOpen());
+    }
 
   }
 
