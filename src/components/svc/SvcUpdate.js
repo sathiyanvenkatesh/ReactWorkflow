@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { getSVCbyId, svcsSelector } from "../../redux-sclice/SvcSclice";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
-import { toast } from 'react-toastify';
+//import { toast } from 'react-toastify';
 import { unwrapResult } from '@reduxjs/toolkit'
+import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow'
 
 //import 'react-toastify/dist/ReactToastify.css';
 const DEVMANAGER = ['Manager1', 'Manager2']
@@ -48,7 +49,7 @@ function SvcUpdate() {
   console.log("svcDetails in update page " + JSON.stringify(svcDetails));
   console.log(svcDetails.tool);
   if (svcDetails !== '' && !hasErrors) {
-    if (!toast.isActive(toastId.current)) {
+   /* if (!toast.isActive(toastId.current)) {
       toastId.current = toast.success("SVC Request Created Successfully" + id, {
         toastId: 'success1',
         position: "top-center",
@@ -57,7 +58,12 @@ function SvcUpdate() {
         closeOnClick: true,
         draggablePercent: 80
       })
-    }
+    }*/
+    const payload = {type:"success",headerText:"Info",bodyText:"SVC Request Created Successfully" + id,saveButton:false};
+    dispatch(setAlertBox(payload))
+    dispatch(getOpen());
+   // event.preventDefault();
+
   }
   /* const [values, setValues] = useState({  
      requestId:svcDetails.requestId,tool:svcDetails.tool,requestorName:user.name,requestDate:svcDetails.requestDate,applicationName:svcDetails.applicationName,version:svcDetails.version,durationFrom:svcDetails.durationFrom,
