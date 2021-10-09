@@ -7,7 +7,7 @@
 //   render(){
 //   return (
 //      <Routes />
-    
+
 //   );
 // }
 // }
@@ -19,8 +19,8 @@ import Routes from './components/Route/Routes';
 import './App.css';
 
 const App = () => {
-  return(
-      <Routes />
+  return (
+    <Routes />
   )
 }
 

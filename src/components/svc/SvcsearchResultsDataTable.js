@@ -7,8 +7,7 @@ import { useDispatch,useSelector} from 'react-redux';
 
 const ActionComponent = ({  row, onClick  }) => {
   const clickHandler = () => onClick(row);
-
- return row.requestStatus==='SUB'?<Button className="btn-danger" onClick={clickHandler}>Approve</Button>:"";
+  return row.requestStatus==='SUB'?<Button className="btn-danger" onClick={clickHandler}>Approve</Button>:"";
 };
 
 
@@ -96,7 +95,6 @@ const customStyles = {
   const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store
   const handleButtonAction =()=> row=> { 
     //alert('Hi');
-    console.log(row);  
      dispatch(approveOrRejectSVCRequest(row,"apillai"));
      console.log("svcapproveDetails---"+svcapproveDetails);
     //if(svcapproveDetails!==''){
@@ -181,18 +179,18 @@ const customStyles = {
       
    
     <DataTable
-   title="Svc Request Table " 
-   columns={columns}
-   data={svclist}
-   defaultSortField="title"
-  // sortIcon={<SortIcon />}
-   pagination
-   //selectableRows
-   //onSelectedRowsChange={handleOnclickRow}
-   customStyles={customStyles}
-   noContextMenu // comment this to show itemas selected as alert at the top of table
-   fixedHeader
-   fixedHeaderScrollHeight="500px"
+        title="Svc Request Table " 
+        columns={columns}
+        data={svclist}
+        defaultSortField="title"
+        // sortIcon={<SortIcon />}
+        pagination
+        //selectableRows
+        //onSelectedRowsChange={handleOnclickRow}
+        customStyles={customStyles}
+        noContextMenu // comment this to show itemas selected as alert at the top of table
+        fixedHeader
+        fixedHeaderScrollHeight="500px"
  /> 
          
     

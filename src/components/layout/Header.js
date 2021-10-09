@@ -3,44 +3,43 @@ import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { DropdownSubmenu, NavDropdownMenu } from "react-bootstrap-submenu";
 
 
-
 const navitems = [
-  {link: '/', title: 'Home',isdropdown:'N'},  
-  {link:'#',title:'SVC Module',isdropdown:'Y',menuItems: [
-    {
-      title: 'Serarch SVC',
-      link:'/svcsearch',
-      isdropdown:'N'
+  { link: '/', title: 'Home', isdropdown: 'N' },
+  {
+    link: '#', title: 'SVC Module', isdropdown: 'Y', menuItems: [
+      {
+        title: 'Serarch SVC',
+        link: '/svcsearch',
+        isdropdown: 'N'
 
-    },
-    {
-      title: 'Create New SVC',
-      link:'/createsvc',
-      isdropdown:'N'
-
-    }
-   
-  ]},
+      },
+      {
+        title: 'Create New SVC',
+        link: '/createsvc',
+        isdropdown: 'N'
+      }
+    ]
+  },
 ];
 
 
 
 class Header extends Component {
-  
-  constructor(props){
-    super(props);
-    this.getNavDropdownItem=this.getNavDropdownItem.bind(this);
-   }
 
-   getNavDropdownItem=(navemenuitem)=>{
+  constructor(props) {
+    super(props);
+    this.getNavDropdownItem = this.getNavDropdownItem.bind(this);
+  }
+
+  getNavDropdownItem = (navemenuitem) => {
     console.log(navemenuitem);
-    
-  return null;
-  
+
+    return null;
+
   }
 
   render() {
-    
+
     return (
       <div>
         <Navbar
@@ -53,73 +52,72 @@ class Header extends Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto ">
-              
-            {navitems.map(item=>{
-               if(item.isdropdown==='N'){
-               return <Nav.Item key={navitems.indexOf(item)}> <Nav.Link  key={navitems.indexOf(item)} href={item.link} className="test-light">{item.title}</Nav.Link>  </Nav.Item>
-               }else return "";
-             
-             }) }  
-            {navitems.map(function(menuItem, i) {
-            if (menuItem.menuItems !== undefined && menuItem.issubmenu === undefined) {
-              
-                return (                  
+
+              {navitems.map(item => {
+                if (item.isdropdown === 'N') {
+                  return <Nav.Item key={navitems.indexOf(item)}> <Nav.Link key={navitems.indexOf(item)} href={item.link} className="test-light">{item.title}</Nav.Link>  </Nav.Item>
+                } else return "";
+
+              })}
+              {navitems.map(function (menuItem, i) {
+                if (menuItem.menuItems !== undefined && menuItem.issubmenu === undefined) {
+
+                  return (
                     <NavDropdown title={menuItem.title} id="basic-nav-dropdown" key={i} >
-                    {menuItem.menuItems.map((subitem,j)=>{
-                     
-                      return   <NavDropdown.Item href={subitem.link} key={j} className="bg-danger text-light">{subitem.title}</NavDropdown.Item>
-                     })}
-                     
-                    </NavDropdown> 
-                );
-            } else {
-                return undefined;
-            }
-        })}
+                      {menuItem.menuItems.map((subitem, j) => {
+                        return <NavDropdown.Item href={subitem.link} key={j} className="bg-danger text-light bg-theme-color" >{subitem.title}</NavDropdown.Item>
+                      })}
 
-{navitems.map(function(menuItem, i) {
- // console.log(menuItem)
-            if (menuItem.menuItems !== undefined && menuItem.issubmenu === 'Y' && menuItem.isdropdown ==='Y') {
-                var submenuList=[];
-                return (                  
-                  <NavDropdownMenu    title={menuItem.title}  id="collasible-nav-dropdown"  alignRight key={i}  >{/* root lablee */}
-                   { menuItem.menuItems.map(function(mitem,i){  
-                     console.log(mitem);
-                      mitem.menuItems.map(function(item,i){
-                        console.log("data"+JSON.stringify(item));
-                         submenuList.push(item);
-                         console.log(submenuList);  
-                          if(submenuList.length >0){  
-                            console.log("inside !=undefined")                
-                    return <DropdownSubmenu href={mitem.link} key={i}>{mitem.title}                                                               
-                               <NavDropdown.Item href="/action/9.1" key ={i}>   Sub 2  </NavDropdown.Item>                              
-                               </DropdownSubmenu>
-                               
-                            
-                            
-                                       
-                  }
-                  else{
-                    return(
-                      <NavDropdown.Item href={mitem.link} key={i}>{mitem.title}</NavDropdown.Item>   
-                      ); 
-                    
-                  }
-                })
-               
-               
-                   //"";//this.getNavDropdownItem(mitem);
-                   return ""; //<NavDropdown.Item href={mitem.link} key={i}>{mitem.title}</NavDropdown.Item>
-                    } )}
+                    </NavDropdown>
+                  );
+                } else {
+                  return undefined;
+                }
+              })}
+
+              {navitems.map(function (menuItem, i) {
+                // console.log(menuItem)
+                if (menuItem.menuItems !== undefined && menuItem.issubmenu === 'Y' && menuItem.isdropdown === 'Y') {
+                  var submenuList = [];
+                  return (
+                    <NavDropdownMenu title={menuItem.title} id="collasible-nav-dropdown" alignRight key={i}  >{/* root lablee */}
+                      {menuItem.menuItems.map(function (mitem, i) {
+                        console.log(mitem);
+                        mitem.menuItems.map(function (item, i) {
+                          console.log("data" + JSON.stringify(item));
+                          submenuList.push(item);
+                          console.log(submenuList);
+                          if (submenuList.length > 0) {
+                            console.log("inside !=undefined")
+                            return <DropdownSubmenu href={mitem.link} key={i}>{mitem.title}
+                              <NavDropdown.Item href="/action/9.1" key={i}>   Sub 2  </NavDropdown.Item>
+                            </DropdownSubmenu>
+
+
+
+
+                          }
+                          else {
+                            return (
+                              <NavDropdown.Item href={mitem.link} key={i}>{mitem.title}</NavDropdown.Item>
+                            );
+
+                          }
+                        })
+
+
+                        //"";//this.getNavDropdownItem(mitem);
+                        return ""; //<NavDropdown.Item href={mitem.link} key={i}>{mitem.title}</NavDropdown.Item>
+                      })}
                     </NavDropdownMenu>
-                
-  
-                );
-            } else {
-                return undefined;
-                
-            }
-        })}
+
+
+                  );
+                } else {
+                  return undefined;
+
+                }
+              })}
 
 
 
@@ -131,7 +129,7 @@ class Header extends Component {
 
 
 
-{/*
+              {/*
               <NavDropdownMenu
                 title="Nested Dropdown RIght"
                 id="collasible-nav-dropdown"
