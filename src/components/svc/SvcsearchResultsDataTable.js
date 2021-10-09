@@ -1,6 +1,6 @@
-import React  from 'react'
+import React,{useState}  from 'react'
 import DataTable  from "react-data-table-component";
-import {svcsSelector,approveOrRejectSVCRequest} from "../../redux-sclice/SvcSclice";
+import {svcsSelector,approveOrRejectSVCRequest,fetchSvcs} from "../../redux-sclice/SvcSclice";
 import Button from "react-bootstrap/Button";
 import { useDispatch,useSelector} from 'react-redux';
 import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow'
@@ -112,23 +112,17 @@ const customStyles = {
 
   const {svclist,svcapproveDetails}=useSelector(svcsSelector)
   const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store
-  const handleButtonAction =()=> row=> { 
-    //alert('Hi');
+
+  const handleButtonAction =()=> row=> {
      dispatch(approveOrRejectSVCRequest(row,"apillai"));
      console.log("svcapproveDetails---"+svcapproveDetails);
-    //if(svcapproveDetails!==''){
-    //  alert(svcapproveDetails)
-    const payload = {type:"success",headerText:"Message",bodyText:svcapproveDetails,saveButton:false};
-    dispatch(setAlertBox(payload))
-    dispatch(getOpen());
-    //}
+    if(svcapproveDetails!==''){
+      const payload = {type:"success",headerText:"Message",bodyText:svcapproveDetails,saveButton:false};
+      dispatch(setAlertBox(payload))
+      dispatch(getOpen());
+      }
   }
-  if(svcapproveDetails!==''){
-    // alert(svcapproveDetails)
-    const payload = {type:"success",headerText:"Message",bodyText:svcapproveDetails,saveButton:false};
-    dispatch(setAlertBox(payload))
-    dispatch(getOpen());
-    }
+  
 
     
   //render() {
