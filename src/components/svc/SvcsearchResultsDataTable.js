@@ -1,6 +1,8 @@
-import React,{useState}  from 'react'
+import React,{useState,useEffect}  from 'react'
 import DataTable  from "react-data-table-component";
-import {svcsSelector,approveOrRejectSVCRequest,fetchSvcs} from "../../redux-sclice/SvcSclice";
+import {svcsSelector,approveOrRejectSVCRequest,fetchSvcs,approveORrejectFailure,approveORrejectSucess} from "../../redux-sclice/SvcSclice";
+import axios from 'axios';
+
 import Button from "react-bootstrap/Button";
 import { useDispatch,useSelector} from 'react-redux';
 import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow'
@@ -110,18 +112,83 @@ const customStyles = {
 
  function  SvcsearchResultsDataTable () {
 
-  const {svclist,svcapproveDetails}=useSelector(svcsSelector)
-  const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store
+  //const {svclist,svcapproveDetails}=useSelector(svcsSelector)
+  //const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store
 
-  const handleButtonAction =()=> row=> {
-     dispatch(approveOrRejectSVCRequest(row,"apillai"));
+  /*const handleButtonAction =()=> row=> {
+    dispatch(approveOrRejectSVCRequest(row,"apillai"));
      console.log("svcapproveDetails---"+svcapproveDetails);
     if(svcapproveDetails!==''){
       const payload = {type:"success",headerText:"Message",bodyText:svcapproveDetails,saveButton:false};
       dispatch(setAlertBox(payload))
       dispatch(getOpen());
       }
+  }*/
+
+ // let rowValue = '';
+  const [rowValue,setRowValue]=useState(null);
+  const [update,setUpdate] = useState(0);
+  const {svclist,svcapproveDetails}=useSelector(svcsSelector)
+  const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store
+  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
+  const userid="apillai";
+  const [values, setValues] = useState({
+    userid: user.name, reqid: '', reqStatus: '', fromdate: '', todate: '', raisedby: '', showall: false
+  });
+
+  const set = name => {
+    return ({ target: { value } }) => {
+      setValues(oldValues => ({ ...oldValues, [name]: value }));
+    }
+  };
+
+ /* useEffect(() => {
+    console.log(svclist);
+  },[svclist]);*/
+  useEffect(() => {
+    console.log("update")
+    // dispatch(approveOrRejectSVCRequest(rowValue,"apillai"));
+    if(update!==0&& rowValue!==null){
+    apicallForUserRequest().then( result => {
+      console.log(result)
+      const payload = {type:"success",headerText:"Message",bodyText:result.data,saveButton:false};
+      dispatch(setAlertBox(payload))
+      dispatch(getOpen());
+      dispatch(fetchSvcs(JSON.stringify(values)));
+      
+      dispatch(approveORrejectFailure())
+    },error => {
+      dispatch(approveORrejectFailure())
+    })
   }
+
+  },[update]);
+
+  const apicallForUserRequest = () => {
+    const headers = {
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': "*"
+    }
+    const valuesoption = {
+      'approver_Unit_Dev_Mngr': 'Y',
+      'remarks': 'ok'
+    }
+
+    return axios.post('https://conv.rakbankonline.ae/eida/svc-local/api/v1/svc/approveorrejct/' +rowValue+ '/' +userid, valuesoption, {
+      headers: headers
+    })
+    } 
+  
+
+  const handleButtonAction = (row) => {
+    console.log(row);
+    //rowValue = row;
+    setRowValue(row.requestid)
+    setUpdate(update+1)
+}
+
+
+
   
 
     
@@ -185,7 +252,8 @@ const customStyles = {
       },
       {
         name:"Action",
-        cell: row => <ActionComponent row={row} onClick={handleButtonAction(row)}>Approve</ActionComponent> ,
+       // cell: row => <ActionComponent row={row} onClick={handleButtonAction(row)}>Approve</ActionComponent> ,
+       cell: row => <ActionComponent row={row} onClick={() => {handleButtonAction(row)}}>Approve</ActionComponent> ,
         ignoreRowClick: true,
         allowOverflow: true,
         button: true,

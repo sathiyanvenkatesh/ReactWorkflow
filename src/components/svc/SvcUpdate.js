@@ -25,7 +25,13 @@ function SvcUpdate() {
     requestId: id, unitManger: '', userId: user.name
   });
 
-  const set = name => {
+  /*const set = name => {
+    return ({ target: { value } }) => {
+      setValues(oldValues => ({ ...oldValues, [name]: value }));
+    }
+  };*/
+
+  const set = (name) => {
     return ({ target: { value } }) => {
       setValues(oldValues => ({ ...oldValues, [name]: value }));
     }
@@ -34,6 +40,7 @@ function SvcUpdate() {
   useEffect(() => {
     //dispatch(getSVCbyId(id) )
     fetchSVCDetailsById()
+    console.log('hi');
 
   }, []);
 
@@ -198,7 +205,7 @@ function SvcUpdate() {
               <div className="panel-body form-group row ">
                 <label htmlFor="unitManger" className="col-sm-3 col-form-label text-danger"><h6>Development Manager </h6></label>
                 <div className="form-check col-sm-3">
-                  <select id="unitManger" className="form-control" value={values.unitManger} onChange={set('unitManger')} >
+                  <select id="unitManger" className="form-control" value={values.unitManger} /*onChange={set('unitManger')}*/onChange={() => {set('unitManger')}} >
                     <option >Select Dev Manager </option>
                     {DEVMANAGER.map(m => <option key={m} defaultValue={svcDetails.unitManger} >{m}</option>)}
                   </select>

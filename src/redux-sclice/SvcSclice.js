@@ -1,5 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
+//import { useDispatch } from 'react-redux';
 import axios from 'axios';
+
 export const initialState = {
     loading: false,
     hasErrors: false,
@@ -235,6 +237,7 @@ export function  udateSvcRequest(values){
   }
 
   export function  approveOrRejectSVCRequest( values,userid){
+   // const dispatch=useDispatch();
     return async dispatch =>{
        try{
          console.log("values to pass api"+JSON.stringify(values));
@@ -253,7 +256,7 @@ export function  udateSvcRequest(values){
           'remarks':'ok'
         }
     
-         axios.post('https://conv.rakbankonline.ae/eida/svc-local/api/v1/svc/approveorrejct/'+values.requestid+'/'+userid,valuesoption,{
+         axios.post('https://conv.rakbankonline.ae/eida/svc-local/api/v1/svc/approveorrejct/'+values+'/'+userid,valuesoption,{
           headers: headers
         })
             .then(data =>  dispatch(approveORrejectSucess(data.data)))

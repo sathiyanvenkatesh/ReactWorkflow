@@ -49,10 +49,11 @@ function SvcApprove() {
   }
 
   const handleSubmit = event => {
+    event.preventDefault();
     const payload = {type:"success",headerText:"Message",bodyText:"Validation check",saveButton:false};
     dispatch(setAlertBox(payload))
     dispatch(getOpen());
-    event.preventDefault();
+    //event.preventDefault();
     //if(handleValidation){
     // dispatch(createNewSvcRequest(JSON.stringify(values)) )
     // }
