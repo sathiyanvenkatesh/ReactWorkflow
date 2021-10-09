@@ -10,7 +10,7 @@ const REQUESTSTATUS = ['closed', 'open', 'inprogress']
 function SvcEnquiry() {
 
   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
-
+  const [ tableview, showTable ] = useState(0);
   const [values, setValues] = useState({
     userid: user.name, reqid: '', reqStatus: '', fromdate: '', todate: '', raisedby: '', showall: false
   });
@@ -34,10 +34,15 @@ function SvcEnquiry() {
 
   const handleSubmit = event => {
     //alert('enquiry buttonclicked');
+    showTable(true);
     event.preventDefault();
     console.log("Enquiry  Requet clicked ");
     dispatch(fetchSvcs(JSON.stringify(values)))
 
+  }
+
+  const resetForm = () => {
+    showTable(false);
   }
   //if(loading && hasErrors){
 
@@ -120,13 +125,12 @@ function SvcEnquiry() {
 
 
         <div className="form-group">
-          <button type="button" className="btn btn-md btn-danger"  >Reset</button> &nbsp;&nbsp;
+          <button type="button" className="btn btn-md btn-danger" onClick={resetForm} >Reset</button> &nbsp;&nbsp;
           <button type="submit" className="btn btn-primary btn-md" >Search</button>
         </div>
       </form>
       <div >
-        renderlist
-        {renderSvcList()}
+        {tableview && renderSvcList()}
       </div>
 
     </div>
