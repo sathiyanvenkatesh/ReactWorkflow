@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { getSVCbyId, svcsSelector } from "../../redux-sclice/SvcSclice";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
-import { getOpen } from '../../redux-sclice/popupwindow'
+import { getOpen,setAlert } from '../../redux-sclice/popupwindow'
 
 
 function SvcApprove() {
@@ -49,6 +49,8 @@ function SvcApprove() {
   }
 
   const handleSubmit = event => {
+    // const payload = [{title:"Error",message:"Validation check"}];
+    dispatch(setAlert(1))
     dispatch(getOpen());
     event.preventDefault();
     //if(handleValidation){
