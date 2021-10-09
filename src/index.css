@@ -36,3 +36,14 @@ input[type=checkbox]
   -o-transform: scale(1.5); /* Opera */
   padding: 15px;
 }
+
+
+.react-model-window{
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+  background: #514f4f;
+  opacity: .9;
+  height: 100vh;
+
+}

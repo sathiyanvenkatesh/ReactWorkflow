@@ -16,6 +16,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SvcApprove from '../svc/SvcApprove';
 
+import ModalPage from '../pages/modalpage'
+
 //import DropDownnestedMenu from '../menu/DropDownnestedMenu';
 
 const tostcontaierstyle = {
@@ -28,6 +30,7 @@ function Routes() {
   //console.log("inside route"+JSON.stringify(user));
   return (
     <React.Fragment>
+      <ModalPage></ModalPage>
       <ToastContainer autoClose={2000} style={tostcontaierstyle} />
       <Layout />
       <BrowserRouter>

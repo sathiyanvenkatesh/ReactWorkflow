@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { createNewSvcRequest, svcsSelector } from "../../redux-sclice/SvcSclice";
 import { useDispatch, useSelector } from 'react-redux';
 //import { Redirect } from 'react-router';
-
 import { useHistory } from 'react-router-dom';
 
 import { Container } from 'react-bootstrap';
@@ -16,6 +15,7 @@ const DEVMANAGER = ['Manager1', 'Manager2']
 
 function SvcNewRequest() {
 
+  const toastId = React.useRef(null);
 
   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
 
@@ -86,20 +86,20 @@ function SvcNewRequest() {
        });*/
     history.push('/updatesvc/' + JSON.stringify(svcaddresult));
     // alert("SVC Added Successfully");
-
     //<ToastContainer/>
-
-
     // navigate1.navigate('/updatesvc/'+row.requestid)
   }
   if (!svcaddSucessflag && hasErrors) {
-    toast.error("Error in Saving Request !", {
+    if(! toast.isActive(toastId.current)) {
+      toastId.current = toast.error("Error in Saving Request !", {
+      current:1,
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
-
     });
+  }
+
   }
   //render() {
   return (

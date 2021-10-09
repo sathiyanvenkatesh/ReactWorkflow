@@ -2,6 +2,7 @@ import React ,{ useState,useEffect } from 'react'
 import { getSVCbyId,svcsSelector} from "../../redux-sclice/SvcSclice";
 import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom'
+import { getOpen } from '../../redux-sclice/popupwindow'
 
 
  function SvcApprove () {
@@ -48,14 +49,11 @@ import {useParams} from 'react-router-dom'
   }
     
    const handleSubmit =event=>{
-    alert('clicked');
+    dispatch(getOpen());
     event.preventDefault();
-    console.log("Update button clicked ");      
      //if(handleValidation){
    // dispatch(createNewSvcRequest(JSON.stringify(values)) )
     // }
-    console.log(svcDetails);
-
   }
      
 

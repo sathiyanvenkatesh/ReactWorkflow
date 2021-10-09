@@ -7,12 +7,12 @@ import { useDispatch,useSelector} from 'react-redux';
 
 const ActionComponent = ({  row, onClick  }) => {
   const clickHandler = () => onClick(row);
-  return row.requestStatus==='SUB'?<Button className="btn-danger" onClick={clickHandler}>Approve</Button>:"";
+  return row.requestStatus==='SUB'?<Button className="btn-sm btn-success" onClick={clickHandler}>Approve</Button>:"";
 };
 
 
 const ActionLinkComponent =({row,onClick}) => {
-  const clickLinkHandler = () => onClick(row);
+const clickLinkHandler = () => onClick(row);
  // console.log(row);
   return <a  href={'/approvesvc/'+row.requestid }  onClick={clickLinkHandler}>{row.requestid}</a>
 };
@@ -76,15 +76,31 @@ const  handleLinkAction =(row)=>{
 
 
 const customStyles = {
+  heading:{
+    style: { 
+      minHeight:"35px",
+    }
+  },
+  text: {
+    primary: '#268bd2',
+    secondary: '#2aa198',
+  },
+  rows: {
+    style: {
+        minHeight: '35px', // override the row height
+    },
+},
   headRow: {
     style: {
-      backgroundColor: '#dc3545'// override the row height
+      backgroundColor: '#343a40',// override the row height
+      minHeight:"35px",
+      height:"10px"
     }
   } ,
   headCells: {
       style:{
           color:'#f8f9fa',
-          fontSize:'20px'
+          fontSize:'16px'
       }
   }
 };
@@ -174,25 +190,27 @@ const customStyles = {
       }
     ];
   
-
     return (
-      
-   
-    <DataTable
-        title="Svc Request Table " 
-        columns={columns}
-        data={svclist}
-        defaultSortField="title"
-        // sortIcon={<SortIcon />}
-        pagination
-        //selectableRows
-        //onSelectedRowsChange={handleOnclickRow}
-        customStyles={customStyles}
-        noContextMenu // comment this to show itemas selected as alert at the top of table
-        fixedHeader
-        fixedHeaderScrollHeight="500px"
- /> 
-         
+      <DataTable
+            title="Table"
+            columns={columns}
+            data={svclist}
+            pagination
+            fixedHeader
+            striped
+            fixedHeaderScrollHeight="500px"
+            customStyles={customStyles}
+        />
+//     <DataTable
+//         columns={columns}
+//         data={svclist}
+//         defaultSortField="title"
+//         pagination
+//         customStyles={customStyles}
+//         noContextMenu // comment this to show itemas selected as alert at the top of table
+//         fixedHeader
+//         fixedHeaderScrollHeight="500px"
+//  /> 
     
     )
   //}
