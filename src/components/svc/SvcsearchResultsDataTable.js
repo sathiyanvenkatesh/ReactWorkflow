@@ -5,7 +5,9 @@ import axios from 'axios';
 
 import Button from "react-bootstrap/Button";
 import { useDispatch,useSelector} from 'react-redux';
-import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow'
+import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow';
+import moment from 'moment';
+
 
 
 
@@ -230,9 +232,11 @@ const customStyles = {
       {
         name: "Request Date",
         selector: "requestDate",
+        cell:row =>moment(row.requestDate).format("DD-MM-YYYY"),
         sortable: true,
         right: true,
         width:"300px"
+        
       },
       {
         name: "Request Status", 
@@ -261,7 +265,7 @@ const customStyles = {
   
     return (
       <DataTable
-            title="Table"
+            title="SVC Result Table"
             columns={columns}
             data={svclist}
             pagination

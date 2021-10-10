@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { unwrapResult } from '@reduxjs/toolkit'
 import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow'
+import moment from 'moment';
 const DEVMANAGER = ['Manager1', 'Manager2']
 
 
@@ -103,7 +104,7 @@ function SvcUpdate() {
             </div>
             <label htmlFor="requestdate" className="col-sm-2 col-form-label text-danger"><h6>Request Date</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="requestdate" value={svcDetails.requestDate} disabled />
+              <input type="text" className="form-control" id="requestdate" value={ moment(svcDetails.requestDate).format("DD-MM-YYYY")} disabled />
             </div>
           </div>
 
@@ -121,11 +122,11 @@ function SvcUpdate() {
           <div className="form-group row">
             <label htmlFor="durationfrom" className="col-sm-2 col-form-label text-danger "><h6>Duration From</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="durationfrom" value={svcDetails.durationFrom} disabled />
+              <input type="text" className="form-control" id="durationfrom" value={moment(svcDetails.durationFrom).format("DD-MM-YYYY")} disabled />
             </div>
             <label htmlFor="durationto" className="col-sm-2 col-form-label text-danger"><h6>Duration To</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="durationto" value={svcDetails.durationTo} disabled />
+              <input type="text" className="form-control" id="durationto" value={moment(svcDetails.durationTo).format("DD-MM-YYYY")} disabled />
             </div>
           </div>
 

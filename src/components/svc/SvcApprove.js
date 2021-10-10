@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow'
 import axios from 'axios';
+import moment from 'moment';
 
 //const DEVMANAGER = ['Manager1', 'Manager2'];
 const RISKAPPROER=['RiskApp1','RiskApp2','RiskApp3']
@@ -80,16 +81,35 @@ function SvcApprove() {
   }
 
   const apicallForUserRequest = (values) => {
+    var valuesoption='';
     const headers = {
       'Content-Type': 'application/json;charset=UTF-8',
       'Access-Control-Allow-Origin': "*"
     }
-    const valuesoption = {
+    if(values.unitManger!==null && svcDetails.unitManagerApprival!=='ok'){
+     valuesoption = {
       'approver_Unit_Dev_Mngr': 'Y',
       'remarks': 'ok'
     }
+  }
+   if (values.accessProvider!==null && values.accessProvider!=='ok'){
+    valuesoption = {
+      'Access_Provider': 'Y',
+      'remarks': 'ok'
+    }
+  }
+    if(values.rarId!==null&& values.rarApproval!=='ok'){
+      valuesoption = {
+        'Approver_Risk_Assur_Review': 'Y',
+        'remarks': 'ok'
+      }
 
-    return axios.post('https://conv.rakbankonline.ae/eida/svc-local/api/v1/svc/approveorrejct/' +values.requestId+ '/' +"apillai", valuesoption, {
+    }
+
+  
+
+
+    return axios.post('https://conv.rakbankonline.ae/eida/svc-local/api/v1/svc/approveorrejct/' +values.requestId+ '/' +"mbshetty", valuesoption, {
       headers: headers
     })
     }
@@ -138,11 +158,11 @@ function SvcApprove() {
           <div className="form-group row p-0 mb-3">
             <label htmlFor="durationfrom" className="col-sm-2 col-form-label text-danger "><h6>Duration From</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="durationfrom" value={svcDetails.durationFrom} disabled />
+              <input type="text" className="form-control" id="durationfrom" value={moment(svcDetails.durationFrom).format("DD-MM-YYYY")} disabled />
             </div>
             <label htmlFor="durationto" className="col-sm-2 col-form-label text-danger"><h6>Duration To</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="durationto" value={svcDetails.durationTo} disabled />
+              <input type="text" className="form-control" id="durationto" value={moment(svcDetails.durationTo).format("DD-MM-YYYY")} disabled />
             </div>
           </div>
 
