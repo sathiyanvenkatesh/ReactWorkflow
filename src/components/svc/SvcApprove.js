@@ -39,7 +39,7 @@ function SvcApprove() {
     dispatch(getSVCbyId(id))
   }
 
-  console.log("svcDetails in update page " + JSON.stringify(svcDetails));
+  //console.log("svcDetails in update page " + JSON.stringify(svcDetails));
   console.log(svcDetails.tool);
   /* const [values, setValues] = useState({  
      requestId:svcDetails.requestId,tool:svcDetails.tool,requestorName:user.name,requestDate:svcDetails.requestDate,applicationName:svcDetails.applicationName,version:svcDetails.version,durationFrom:svcDetails.durationFrom,
@@ -86,19 +86,19 @@ function SvcApprove() {
       'Content-Type': 'application/json;charset=UTF-8',
       'Access-Control-Allow-Origin': "*"
     }
-    if(values.unitManger!==null && svcDetails.unitManagerApprival!=='ok'){
+    if(svcDetails.requestStatus==='SUB' && svcDetails.unitManagerApprival!=='ok'){
      valuesoption = {
       'approver_Unit_Dev_Mngr': 'Y',
       'remarks': 'ok'
     }
   }
-   if (values.accessProvider!==null && values.accessProvider!=='ok'){
+   if (svcDetails.requestStatus === 'APD2' && values.accessProviderApproval!=='ok'){
     valuesoption = {
       'Access_Provider': 'Y',
       'remarks': 'ok'
     }
   }
-    if(values.rarId!==null&& values.rarApproval!=='ok'){
+    if(svcDetails.requestStatus === 'APD1' && values.rarApproval!=='ok'){
       valuesoption = {
         'Approver_Risk_Assur_Review': 'Y',
         'remarks': 'ok'
