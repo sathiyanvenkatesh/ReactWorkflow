@@ -4,21 +4,28 @@ import { paramSelector,fetchDevManagers} from "../../redux-sclice/ParamsSlice";
 import { useDispatch, useSelector } from 'react-redux';
 //import { Redirect } from 'react-router';
 import { useHistory } from 'react-router-dom';
-import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow'
+import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import addDays from 'date-fns/addDays';
 
 //import { Container } from 'react-bootstrap';
 //import { toast } from 'react-toastify';
 //import 'react-toastify/dist/ReactToastify.css';
 
 const TOOLS = ['Aldo', 'SVN', 'VSS', 'Git'];
-const APPLICATIONSNAME = ['EFORMS', 'GOAML', 'AECB']
-const DEVMANAGER = ['Manager1', 'Manager2']
+const APPLICATIONSNAME = ['EFORMS', 'GOAML', 'AECB','RRC','CBWS']
+//const DEVMANAGER = ['Manager1', 'Manager2']
+const DEVMANAGER = [{"userid":'mbshetty',"username":"Mallika Shetty"},{ "userid":"apillai","username":"Ajit Pillai"},{"userid":"vsathiya","username":"Sathiyan Venkatesh"}]
 
 
 function SvcNewRequest() {
   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(addDays(new Date(),30));
+  const [reqDate,setReqDate]=useState(new Date())
   const [values, setValues] = useState({
-    requestId: '', tool: '', requestorName: user.name, requestDate: '', applicationName: '', version: '', durationFrom: '', durationTo: '',
+    requestId: '', tool: '', requestorName: user.name, requestDate:reqDate, applicationName: '', version: '', durationFrom:startDate , durationTo:endDate ,
     reasonforReq: '', checkOut: "N", checkIn: "N", unitManger: '', checkInReq: "N", deployment: "N", emergencyCheck: "Y", fromArchive: "N", getLatest: "Y",
     toOtherEnv: "N", userId: user.name
   });
@@ -137,7 +144,8 @@ const fetchSVCPaamDetails = () => {
           </div>
           <label htmlFor="requestDate" className="col-sm-2 col-form-label text-danger">Request Date</label>
           <div className="col-sm-4">
-            <input type="date" className="form-control-md big-checkbox" id="requestDate" value={values.requestDate} onChange={set('requestDate')} />
+           { /*<input type="date" className="form-control-md big-checkbox" id="requestDate" value={values.requestDate} onChange={set('requestDate')} />*/}
+            <DatePicker selected={reqDate} dateFormat="dd/MM/yyyy"  value={values.requestDate} minDate={new Date()} maxDate={new Date()}  disabled />
           </div>
         </div>
 
@@ -158,11 +166,13 @@ const fetchSVCPaamDetails = () => {
         <div className="form-group row">
           <label htmlFor="durationFrom" className="col-sm-2 col-form-label text-danger ">Duration From</label>
           <div className="col-sm-4">
-            <input type="date" className="form-control" id="durationFrom" value={values.durationFrom} onChange={set('durationFrom')} />
+            {/*<input type="date" className="form-control" id="durationFrom" value={values.durationFrom} onChange={set('durationFrom')} />*/}
+            <DatePicker selected={startDate} dateFormat="dd/MM/yyyy"  value={values.durationFrom} minDate={new Date()} maxDate={new Date()}  onChange={(date) =>setStartDate(date)} />
           </div>
           <label htmlFor="durationTo" className="col-sm-2 col-form-label text-danger">Duration To</label>
           <div className="col-sm-4">
-            <input type="date" className="form-control" id="durationTo" value={values.durationTo} onChange={set('durationTo')} />
+            {/*<input type="date" className="form-control" id="durationTo" value={values.durationTo} onChange={set('durationTo')} />*/}
+            <DatePicker selected={endDate} dateFormat="dd/MM/yyyy"  value={values.durationTo} minDate={new Date()} maxDate={addDays(new Date(),30)} onChange={(date) =>setEndDate(date)} />
           </div>
         </div>
 
@@ -198,7 +208,7 @@ const fetchSVCPaamDetails = () => {
             <div className="form-check col-sm-4">
               <select id="unitManger" className="form-control" value={values.unitManger} onChange={set('unitManger')} >
                 <option >Select Dev Manager </option>
-                {DEVMANAGER.map(m => <option key={m}>{m}</option>)}
+                {DEVMANAGER.map(m => <option key={m.userid} value={m.userid}>{m.username}</option>)}
               </select>
             </div>
           </div>

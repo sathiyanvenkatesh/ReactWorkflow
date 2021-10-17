@@ -3,6 +3,8 @@ import { fetchSvcs, svcsSelector } from "../../redux-sclice/SvcSclice";
 import { useDispatch, useSelector } from 'react-redux';
 import SvcsearchResultsDataTable from './SvcsearchResultsDataTable';
 
+
+
 const RAISEDBY = ['Venkatesh', 'Sinu', 'malika', 'sathiyan']
 const REQUESTSTATUS = ['closed', 'open', 'inprogress']
 
@@ -10,6 +12,7 @@ const REQUESTSTATUS = ['closed', 'open', 'inprogress']
 function SvcEnquiry() {
 
   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
+
   const [ tableview, showTable ] = useState(0);
   const [values, setValues] = useState({
     userid: user.name, reqid: '', reqStatus: '', fromdate: '', todate: '', raisedby: '', showall: false

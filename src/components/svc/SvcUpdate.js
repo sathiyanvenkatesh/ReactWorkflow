@@ -5,8 +5,9 @@ import { useParams } from 'react-router-dom'
 import { unwrapResult } from '@reduxjs/toolkit'
 import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow'
 import moment from 'moment';
-const DEVMANAGER = ['Manager1', 'Manager2']
+//const DEVMANAGER = ['mallika', 'apillai','sathiyan']
 
+const DEVMANAGER = [{"userid":'mbshetty',"username":"Mallika Shetty"},{ "userid":"apillai","username":"Ajit Pillai"},{"userid":"vsathiya","username":"Sathiyan Venkatesh"}]
 
 function SvcUpdate() {
 
@@ -18,7 +19,7 @@ function SvcUpdate() {
   const { svcDetails, hasErrors,svcupdateresult } = useSelector(svcsSelector)
 
   const [values, setValues] = useState({
-    requestId: id, unitManger: '', userId: user.name
+    requestId: id, unitManger: svcDetails.unitManger, userId: user.name
   });
 
   const set = name => {
@@ -69,13 +70,13 @@ function SvcUpdate() {
     // dispatch(createNewSvcRequest(JSON.stringify(values)) )
     // }
     console.log(values);
-   // if(svcupdateresult!==''){
+   if(svcupdateresult!==''){
       console.log('SVC Update'+svcupdateresult);
       //console.log('SVC Update'+svcupdateresult);
       const payload = {type:"success",headerText:"Info",bodyText:svcupdateresult,saveButton:false};
        dispatch(setAlertBox(payload))
        dispatch(getOpen());
-   // }
+    }
 
   }
 
@@ -122,11 +123,11 @@ function SvcUpdate() {
           <div className="form-group row">
             <label htmlFor="durationfrom" className="col-sm-2 col-form-label text-danger "><h6>Duration From</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="durationfrom" value={moment(svcDetails.durationFrom).format("DD-MM-YYYY")} disabled />
+              <input type="text" className="form-control" id="durationfrom" value={moment(svcDetails.durationFrom).format("DD/MM/YYYY")} disabled />
             </div>
             <label htmlFor="durationto" className="col-sm-2 col-form-label text-danger"><h6>Duration To</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="durationto" value={moment(svcDetails.durationTo).format("DD-MM-YYYY")} disabled />
+              <input type="text" className="form-control" id="durationto" value={moment(svcDetails.durationTo).format("DD/MM/YYYY")} disabled />
             </div>
           </div>
 
@@ -170,9 +171,9 @@ function SvcUpdate() {
               <div className="panel-body form-group row ">
                 <label htmlFor="unitManger" className="col-sm-3 col-form-label text-danger"><h6>Development Manager </h6></label>
                 <div className="form-check col-sm-3">
-                  <select id="unitManger" className="form-control" value={values.unitManger} onChange={set('unitManger')}/*onChange={() => {set('unitManger')}}*/ >
+                  <select id="unitManger" className="form-control" value={values.unitManger}   onChange={set('unitManger')}/*onChange={() => {set('unitManger')}}*/ >
                     <option >Select Dev Manager </option>
-                    {DEVMANAGER.map(m => <option key={m} defaultValue={svcDetails.unitManger} >{m}</option>)}
+                    {DEVMANAGER.map(m => <option key={m.userid}   >{m.username}</option>)}
                   </select>
 
                 </div>

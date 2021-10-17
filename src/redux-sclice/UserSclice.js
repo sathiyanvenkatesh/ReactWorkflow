@@ -48,7 +48,7 @@ export default userSclice.reducer;
 export const login = ({ name, password }) => async dispatch => {
     try {
       // const res = await api.post('/api/auth/login/', { username, password })
-      if(name==='sathiyan'&& password==='123'){
+      if(name==='mbshetty'&& password==='123'){
       dispatch(loginSuccess({name,password}));
       }else{
         dispatch(loginFailure());

@@ -7,8 +7,9 @@ import axios from 'axios';
 import moment from 'moment';
 
 //const DEVMANAGER = ['Manager1', 'Manager2'];
-const RISKAPPROER=['RiskApp1','RiskApp2','RiskApp3']
-const VRESIONCONTROLPROVIDER=['Provider1','Provider2']
+const RISKAPPROER=['mallika','sathiyan','venkatesh']
+const VRESIONCONTROLPROVIDER=['ajit pillai','ramesh','mallika']
+
 
 
 function SvcApprove() {
@@ -21,7 +22,7 @@ function SvcApprove() {
   const [values, setValues] = useState({
     requestId: id, unitManger: svcDetails.unitManger, userId: user.name,remarks:'',accessProvider:'',rarId:''
   });
-
+  //const allremaks=;
   const set = name => {
     return ({ target: { value } }) => {
       setValues(oldValues => ({ ...oldValues, [name]: value }));
@@ -158,11 +159,11 @@ function SvcApprove() {
           <div className="form-group row p-0 mb-3">
             <label htmlFor="durationfrom" className="col-sm-2 col-form-label text-danger "><h6>Duration From</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="durationfrom" value={moment(svcDetails.durationFrom).format("DD-MM-YYYY")} disabled />
+              <input type="text" className="form-control" id="durationfrom" value={moment(svcDetails.durationFrom).format("DD/MM/YYYY")} disabled />
             </div>
             <label htmlFor="durationto" className="col-sm-2 col-form-label text-danger"><h6>Duration To</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="durationto" value={moment(svcDetails.durationTo).format("DD-MM-YYYY")} disabled />
+              <input type="text" className="form-control" id="durationto" value={moment(svcDetails.durationTo).format("DD/MM/YYYY")} disabled />
             </div>
           </div>
 
@@ -207,8 +208,8 @@ function SvcApprove() {
             <div className="form-group row p-0 mb-3">
               <label htmlFor="devmgr" className="col-sm-2 col-form-label text-danger">Approved</label>
               <div className="form-check col-sm-4">
-              <input className="form-radio-input mr-1" type="radio" value="Y"  defaultChecked={svcDetails.unitManagerApprival === 'ok'} id="approved" name="appstatus" />   <span>Yes</span>
-                    <input className="form-radio-input ml-2 mr-1" type="radio" value="N" defaultChecked={svcDetails.unitManagerApprival !== 'ok'} id="rejected" name="appstatus" /> <span>No</span>
+              <input className="form-radio-input mr-1" type="radio" value="Y"  checked={svcDetails.unitManagerApprival === 'ok'} id="approved" name="appstatus" />   <span>Yes</span>
+                    <input className="form-radio-input ml-2 mr-1" type="radio" value="N" checked={svcDetails.unitManagerApprival!=='ok'} id="rejected" name="appstatus" /> <span>No</span>
               </div>
             </div>
            </div>
@@ -264,7 +265,7 @@ function SvcApprove() {
         
           <div className="form-row">
             <div className="form-group col-md-12 ">
-              <label htmlFor="allremarks" className="text-danger"><h6>All Remarks</h6></label>
+              <label htmlFor="allremarks" className="text-danger"><h6>All Remarks</h6></label>              
               <textarea className="form-control" id="allremaks" value={svcDetails.allRemarks}  ></textarea>
             </div>
 
