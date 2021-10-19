@@ -27,7 +27,7 @@ const paramsSlice = createSlice({
       state.hasErrors = true
     },
     getDevManagerSuccess: (state, { payload }) => {
-      console.log(payload);
+     // console.log(payload);
         state.devmanagers = JSON.stringify(payload);
         state.loading = false
         state.hasErrors = false
@@ -63,8 +63,9 @@ export function fetchTools() {
     dispatch(getParam())
 
     try {
-      const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
+      const response = await fetch('https://conv.rakbankonline.ae/eida/svc-local/api/v1/tools')
       const data = await response.json()
+      console.log(data);
 
       dispatch(getToolsSuccess(data.meals))
     } catch (error) {
@@ -80,6 +81,7 @@ export function fetchDevManagers() {
       try {
         const response = await fetch('https://conv.rakbankonline.ae/eida/svc-local/api/v1/approvals/SVC_UDM')
         const data = await response.json()
+        console.log(data);
   
         dispatch(getDevManagerSuccess(data))
       } catch (error) {
@@ -92,8 +94,9 @@ export function fetchDevManagers() {
       dispatch(getParam())
   
       try {
-        const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
+        const response = await fetch('https://conv.rakbankonline.ae/eida/svc-local/api/v1/applications')
         const data = await response.json()
+        console.log(data);
   
         dispatch(getApplicationNameSuccess(data.meals))
       } catch (error) {

@@ -41,7 +41,7 @@ function SvcApprove() {
   }
 
   //console.log("svcDetails in update page " + JSON.stringify(svcDetails));
-  console.log(svcDetails.tool);
+  //console.log(svcDetails.tool);
   /* const [values, setValues] = useState({  
      requestId:svcDetails.requestId,tool:svcDetails.tool,requestorName:user.name,requestDate:svcDetails.requestDate,applicationName:svcDetails.applicationName,version:svcDetails.version,durationFrom:svcDetails.durationFrom,
      durationTo:svcDetails.durationTo,
@@ -106,16 +106,21 @@ function SvcApprove() {
       }
 
     }
-
-  
-
-
     return axios.post('https://conv.rakbankonline.ae/eida/svc-local/api/v1/svc/approveorrejct/' +values.requestId+ '/' +"mbshetty", valuesoption, {
       headers: headers
     })
     }
 
-
+    const handlecheckinChange = (e) => {
+      let isChecked = e.target.checked ? "Y" : "N";
+      console.log("isChecked" + isChecked);
+      //values.checkIn = isChecked;
+    }
+    const handlecheckoutChange = (e) => {
+      let isChecked = e.target.checked ? "Y" : "N";
+      console.log("isChecked" + isChecked);
+     // values.checkOut = isChecked;
+    }
 
 
   //render() {
@@ -182,15 +187,15 @@ function SvcApprove() {
             <h5 className="font-weight-bold">Access Rights</h5>
             <div className="col-md-4 form-inline p-0">
               <div >
-                <div class="form-check p-0">
-                  <label class="form-check-label text-danger" for="checkOut">Check Out</label>
-                  <input className="form-check-input ml-2 p-2" type="checkbox" defaultChecked={svcDetails.checkIn?'Y':'N'} value={svcDetails.checkOut} id="checkOut" disabled />  
+                <div className="form-check p-0">
+                  <label className="form-check-label text-danger" htmlFor="checkOut">Check Out</label>
+                  <input className="form-check-input ml-2 p-2" type="checkbox" /*defaultChecked={svcDetails.checkIn?'Y':'N'}*/ checked={svcDetails.checkOut?'Y':'N'} value={svcDetails.checkOut} id="checkOut" disabled onChange={e => handlecheckoutChange(e)} />  
                 </div>
               </div>
               <div className="ml-4">
-                <div class="form-check p-0">
-                  <label class="form-check-label text-danger" for="checkIn">Check In</label>
-                  <input className="form-check-input ml-2 p-2" type="checkbox" defaultChecked={svcDetails.checkIn?'Y':'N'}  value={svcDetails.checkIn} id="checkIn" disabled />
+                <div className="form-check p-0">
+                  <label className="form-check-label text-danger" htmlFor="checkIn">Check In</label>
+                  <input className="form-check-input ml-2 p-2" type="checkbox" /*defaultChecked={svcDetails.checkIn?'Y':'N'}*/ checked={svcDetails.checkIn?'Y':'N'}  value={svcDetails.checkIn} id="checkIn" disabled onChange={e => handlecheckinChange(e)} />
                 </div>
               </div>
             </div>
@@ -208,8 +213,8 @@ function SvcApprove() {
             <div className="form-group row p-0 mb-3">
               <label htmlFor="devmgr" className="col-sm-2 col-form-label text-danger">Approved</label>
               <div className="form-check col-sm-4">
-              <input className="form-radio-input mr-1" type="radio" value="Y"  checked={svcDetails.unitManagerApprival === 'ok'} id="approved" name="appstatus" />   <span>Yes</span>
-                    <input className="form-radio-input ml-2 mr-1" type="radio" value="N" checked={svcDetails.unitManagerApprival!=='ok'} id="rejected" name="appstatus" /> <span>No</span>
+              <input className="form-radio-input mr-1" type="radio" value="Y"  defaultChecked={svcDetails.unitManagerApprival === 'ok'} id="approved" name="appstatus" />   <span>Yes</span>
+               <input className="form-radio-input ml-2 mr-1" type="radio" value="N" defaultChecked={svcDetails.unitManagerApprival!=='ok'} id="rejected" name="appstatus" /> <span>No</span>
               </div>
             </div>
            </div>

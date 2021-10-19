@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { createNewSvcRequest, svcsSelector } from "../../redux-sclice/SvcSclice";
-import { paramSelector,fetchDevManagers} from "../../redux-sclice/ParamsSlice";
+import { paramSelector,fetchDevManagers,fetchTools,fetchApplicationsNames} from "../../redux-sclice/ParamsSlice";
 import { useDispatch, useSelector } from 'react-redux';
-//import { Redirect } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import addDays from 'date-fns/addDays';
 
-//import { Container } from 'react-bootstrap';
-//import { toast } from 'react-toastify';
-//import 'react-toastify/dist/ReactToastify.css';
 
 const TOOLS = ['Aldo', 'SVN', 'VSS', 'Git'];
 const APPLICATIONSNAME = ['EFORMS', 'GOAML', 'AECB','RRC','CBWS']
@@ -30,25 +26,22 @@ function SvcNewRequest() {
     toOtherEnv: "N", userId: user.name
   });
 
-  const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store 
-  //const navigate1 = useNavigate()
-  // toast.configure();
+  const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store   
   const history = useHistory();
   const { svcaddSucessflag, hasErrors, svcaddresult } = useSelector(svcsSelector);
-  const {devmanagers} = useSelector(paramSelector)
+  const {devmanagers} = useSelector(paramSelector);
   useEffect(() => {
-    //dispatch(getSVCbyId(id) )
     fetchSVCPaamDetails()
     console.log('hi');
-
   },[]);
 
 const fetchSVCPaamDetails = () => {
   console.log('inside param methos' );
   dispatch(fetchDevManagers());
- // if(devmanagers!==undefined){
+  dispatch(fetchTools());
+  dispatch(fetchApplicationsNames());
   console.log("hi"+devmanagers);
- // }
+ 
 }
    
   
@@ -187,14 +180,14 @@ const fetchSVCPaamDetails = () => {
           <h5 className="font-weight-bold">Access Rights</h5>
           <div className="col-md-4 form-inline p-0">
             <div >
-              <div class="form-check p-0">
-                <label class="form-check-label text-danger" for="checkOut">Check Out</label>
+              <div className="form-check p-0">
+                <label className="form-check-label text-danger" htmlFor="checkOut">Check Out</label>
                 <input type="checkbox" className="form-check-input ml-2 p-2" id="checkOut" required value={values.checkOut} onChange={e => handlecheckoutChange(e)} />
               </div>
             </div>
             <div className="ml-4">
-              <div class="form-check p-0">
-                <label class="form-check-label text-danger" for="checkIn">Check In</label>
+              <div className="form-check p-0">
+                <label className="form-check-label text-danger" htmlFor="checkIn">Check In</label>
                 <input type="checkbox" className="form-check-input ml-2 p-2" id="checkIn" required value={values.checkIn} onChange={e => handlecheckinChange(e)} />
               </div>
             </div>

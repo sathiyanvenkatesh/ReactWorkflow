@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import { fetchSvcs, svcsSelector } from "../../redux-sclice/SvcSclice";
+//import { fetchSvcs, svcsSelector } from "../../redux-sclice/SvcSclice";
+import {fetchSvcs,svcSearchSelector  } from "../../redux-sclice/SvcSearchSlice";
 import { useDispatch, useSelector } from 'react-redux';
 import SvcsearchResultsDataTable from './SvcsearchResultsDataTable';
+
 
 
 
@@ -13,7 +15,7 @@ function SvcEnquiry() {
 
   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
 
-  const [ tableview, showTable ] = useState(0);
+  const [ tableview, showTable ] = useState(false);
   const [values, setValues] = useState({
     userid: user.name, reqid: '', reqStatus: '', fromdate: '', todate: '', raisedby: '', showall: false
   });
@@ -32,7 +34,7 @@ function SvcEnquiry() {
 
   const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store 
 
-  const { loading, hasErrors/*,svclist*/ } = useSelector(svcsSelector)
+  const { loading, hasErrors/*,svclist*/ } = useSelector(svcSearchSelector)
 
 
   const handleSubmit = event => {
