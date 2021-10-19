@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { /*useState,*/ /*useEffect*/ } from "react";
 import { useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { useDispatch } from 'react-redux'
@@ -9,13 +9,13 @@ const ModalPage = () => {
     const { open } = useSelector((state) => state.popup);
     const { message } = useSelector((state) => state.popup);
     const dispatch = useDispatch();
-    const [headerText, setheaderText] = useState("");
-    const [bodyText, setbodyText] = useState("");
-    const [savebutton, setsaveButton] = useState(false);
+   // const [headerText, setheaderText] = useState("");
+    //const [bodyText, setbodyText] = useState("");
+    //const [savebutton, setsaveButton] = useState(false);
 
-    useEffect(() => {
+   /* useEffect(() => {
         console.log(message)
-    }, [open])
+    }, [open])*/
  
     function closeModal() {
         dispatch(getClose())
