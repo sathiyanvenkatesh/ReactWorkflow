@@ -5,17 +5,19 @@ class Footer extends Component {
     const footerdivStyle = {
       width: "100%",
       padding:"2px",
+      marginTop:"10px",
       backgroundColor: "#212529"
     };
     return (
-      <div
-        className="fixed-bottom d-flex flex-column flex-md-row justify-content-center align-items-center text-center"
-        style={footerdivStyle}
-      >
-        <span className="text-light">
-          Copyright @  . All rights reserverd.
-        </span>
-      </div>
+      <>
+        <div
+          className="fixed-bottom d-flex flex-column flex-md-row justify-content-center align-items-center text-center"
+          style={footerdivStyle}>
+          <span className="text-light">
+            Copyright @  . All rights reserverd.
+          </span>
+        </div>
+      </>
     );
   }
 }

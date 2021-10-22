@@ -83,9 +83,9 @@ function SvcUpdate() {
 
   //render() {
   return (
-    <div className="container" style={contaierstyle}>
-      <h2>SVC Access Request Update Form</h2>
-      <div>
+    <div className="container">
+      <h5 className="font-weight-bold">SVC Access Request Update Form</h5>
+      <div className="mt-4">
         <form onSubmit={handleSubmit}>
           <div className="form-group row">
             <label htmlFor="requestid" className="col-sm-2 col-form-label text-danger "><h6>Request ID</h6></label>

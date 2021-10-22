@@ -54,21 +54,18 @@ function SvcEnquiry() {
   //console.log("svclist"+JSON.stringify(svclist))
   const renderSvcList = () => {
     if (loading) return <p>Loading SvcList...</p>
-    if (hasErrors) return <p>Cannot display SvcList...</p>
+    if (hasErrors) return <p>No record found!</p>
 
     /// if(svclist.length>0)
     return <SvcsearchResultsDataTable></SvcsearchResultsDataTable>
   }
 
-  const contaierstyle = {
-    maxWidth: "1500px"
-  }
   //}
 
 
   //render() {
   return (
-    <div className="container margin-left-right" style={contaierstyle}>
+    <div className="container">
 
       <h5 className="font-weight-bold">SVC Enquiry</h5>
       <form onSubmit={handleSubmit}>
@@ -120,9 +117,9 @@ function SvcEnquiry() {
 
         <div className="form-group row">
           <label htmlFor="showall" className="col-sm-2 col-form-label text-danger"><h6>Show All </h6></label>
-          <div className="form-check">
-            <input className="form-check-input" type="checkbox" id="gridCheck" name="showall" value={values.showall} onChange={e => handleChange(e)}/*onChange={set('showall')}*/ />
-            <label className="form-check-label" htmlFor="gridCheck">
+          <div className="col-sm-10 d-flex align-items-center">
+            <input className="mr-2" type="checkbox" id="gridCheck" name="showall" value={values.showall} onChange={e => handleChange(e)}/*onChange={set('showall')}*/ />
+            <label className="m-0" htmlFor="gridCheck">
               *If not selected , only SVCs that require your approval are displayed.
             </label>
           </div>

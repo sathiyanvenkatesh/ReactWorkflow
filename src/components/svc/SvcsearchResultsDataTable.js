@@ -31,6 +31,12 @@ const customStyles = {
   heading:{
     style: { 
       minHeight:"35px",
+      fontSize:"14px"
+    }
+  },
+  title:{
+    style:{
+      fontSize:"14px"
     }
   },
   text: {

@@ -26,6 +26,16 @@ code {
   margin:10px 2em 10px 2em;
 }
 
+.container {
+  margin-top:15px;
+}
+
+.rdt_TableHeader{
+  font-size: 14px !important;
+  min-height: 0px !important;
+  padding-left: 0px !important;
+  font-weight: bold !important;
+}
 
 input[type=checkbox]
 {
@@ -46,4 +56,10 @@ input[type=checkbox]
   opacity: .9;
   height: 100vh;
 
+}
+
+.navbar-brand{
+  font-size: 16px;
+  padding: 0px;
+  margin: 0px;
 }

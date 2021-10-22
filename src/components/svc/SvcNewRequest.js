@@ -113,7 +113,7 @@ const fetchSVCPaamDetails = () => {
   }
   //render() {
   return (
-    <div className="container margin-left-right">
+    <div className="container">
       <h5 className="font-weight-bold">SVC Access Request Form</h5>
       <form onSubmit={handleSubmit}>
         <div className="form-group row">
@@ -138,7 +138,7 @@ const fetchSVCPaamDetails = () => {
           <label htmlFor="requestDate" className="col-sm-2 col-form-label text-danger">Request Date</label>
           <div className="col-sm-4">
            { /*<input type="date" className="form-control-md big-checkbox" id="requestDate" value={values.requestDate} onChange={set('requestDate')} />*/}
-            <DatePicker selected={reqDate} dateFormat="dd/MM/yyyy"  value={values.requestDate} minDate={new Date()} maxDate={new Date()}  disabled />
+            <DatePicker className="form-control" selected={reqDate} dateFormat="dd/MM/yyyy"  value={values.requestDate} minDate={new Date()} maxDate={new Date()}  disabled />
           </div>
         </div>
 
@@ -160,12 +160,12 @@ const fetchSVCPaamDetails = () => {
           <label htmlFor="durationFrom" className="col-sm-2 col-form-label text-danger ">Duration From</label>
           <div className="col-sm-4">
             {/*<input type="date" className="form-control" id="durationFrom" value={values.durationFrom} onChange={set('durationFrom')} />*/}
-            <DatePicker selected={startDate} dateFormat="dd/MM/yyyy"  value={values.durationFrom} minDate={new Date()} maxDate={new Date()}  onChange={(date) =>setStartDate(date)} />
+            <DatePicker className="form-control" selected={startDate} dateFormat="dd/MM/yyyy"  value={values.durationFrom} minDate={new Date()} maxDate={new Date()}  onChange={(date) =>setStartDate(date)} />
           </div>
           <label htmlFor="durationTo" className="col-sm-2 col-form-label text-danger">Duration To</label>
           <div className="col-sm-4">
             {/*<input type="date" className="form-control" id="durationTo" value={values.durationTo} onChange={set('durationTo')} />*/}
-            <DatePicker selected={endDate} dateFormat="dd/MM/yyyy"  value={values.durationTo} minDate={new Date()} maxDate={addDays(new Date(),30)} onChange={(date) =>setEndDate(date)} />
+            <DatePicker className="form-control" selected={endDate} dateFormat="dd/MM/yyyy"  value={values.durationTo} minDate={new Date()} maxDate={addDays(new Date(),30)} onChange={(date) =>setEndDate(date)} />
           </div>
         </div>
 

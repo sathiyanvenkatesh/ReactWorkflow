@@ -7,7 +7,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 //const DEVMANAGER = ['Manager1', 'Manager2'];
-const RISKAPPROER=['mallika','sathiyan','venkatesh']
+const RISKAPPROER=[{key:'mallika',value:'mallika'},{key:'sathiyan',value:'sathiyan'},{key:'venkatesh',value:'venkatesh'}]
 const VRESIONCONTROLPROVIDER=['ajit pillai','ramesh','mallika']
 
 
@@ -125,8 +125,8 @@ function SvcApprove() {
 
   //render() {
   return (
-    <div className="container margin-left-right  pb-2" style={contaierstyle}>
-      <h5 className="font-weight-bold">SVC Access Request Update Form</h5>
+    <div className="container pb-2">
+      <h5 className="font-weight-bold">SVC Access Request Approval Form</h5>
         <form onSubmit={handleSubmit}>
           <div className="form-group row p-0 mb-3">
             <label htmlFor="requestid" className="col-sm-2 col-form-label text-danger "><h6>Request ID</h6></label>

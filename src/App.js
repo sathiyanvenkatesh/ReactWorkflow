@@ -16,6 +16,9 @@
 
 import React from 'react';
 import Routes from './components/Route/Routes';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import './App.css';
 
 const App = () => {

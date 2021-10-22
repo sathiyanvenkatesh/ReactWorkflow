@@ -32,8 +32,6 @@ class Header extends Component {
   }
 
   getNavDropdownItem = (navemenuitem) => {
-    console.log(navemenuitem);
-
     return null;
 
   }
@@ -42,17 +40,11 @@ class Header extends Component {
 
     return (
       <div>
-        <Navbar
-          expand="lg"
-          variant="dark"
-          className="bg-dark"
-          style={{ marginTop: "0px" }}
-        >
-          <Navbar.Brand href="/"> Web App Template </Navbar.Brand>
+        <Navbar expand="lg" variant="dark" className="bg-dark" style={{ marginTop: "0px" }}>
+          {/* <Navbar.Brand href="/"> Web App Template </Navbar.Brand> */}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto ">
-
               {navitems.map(item => {
                 if (item.isdropdown === 'N') {
                   return <Nav.Item key={navitems.indexOf(item)}> <Nav.Link key={navitems.indexOf(item)} href={item.link} className="test-light">{item.title}</Nav.Link>  </Nav.Item>
@@ -61,7 +53,6 @@ class Header extends Component {
               })}
               {navitems.map(function (menuItem, i) {
                 if (menuItem.menuItems !== undefined && menuItem.issubmenu === undefined) {
-
                   return (
                     <NavDropdown title={menuItem.title} id="basic-nav-dropdown" key={i} >
                       {menuItem.menuItems.map((subitem, j) => {
@@ -92,19 +83,13 @@ class Header extends Component {
                             return <DropdownSubmenu href={mitem.link} key={i}>{mitem.title}
                               <NavDropdown.Item href="/action/9.1" key={i}>   Sub 2  </NavDropdown.Item>
                             </DropdownSubmenu>
-
-
-
-
                           }
                           else {
                             return (
                               <NavDropdown.Item href={mitem.link} key={i}>{mitem.title}</NavDropdown.Item>
                             );
-
                           }
                         })
-
 
                         //"";//this.getNavDropdownItem(mitem);
                         return ""; //<NavDropdown.Item href={mitem.link} key={i}>{mitem.title}</NavDropdown.Item>

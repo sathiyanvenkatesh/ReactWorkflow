@@ -7,8 +7,10 @@ class Layout extends Component {
     return (
       <div>
         <Navbar />
-        <Footer />
+        <br></br>
+        {/* <Footer /> */}
       </div>
+
     );
   }
 }

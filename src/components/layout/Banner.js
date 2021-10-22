@@ -1,6 +1,10 @@
 import React from 'react'
 import { Nav, Navbar } from 'react-bootstrap';
 import Logo from '../../assets/logo.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+
+
 import {/*useSelector,*/useDispatch } from 'react-redux';
 import { /*selectUser,*/logout } from '../../redux-sclice/UserSclice';
 //import { Link} from 'react-router-dom';
@@ -32,7 +36,7 @@ function Banner() {
 
     return (
         <div>
-            <Navbar expand='lg' bg="danger" variant="dark" style={{ marginTop: "0px", height:"75px",minHeight: "75px" }} >
+            <Navbar expand='lg' bg="danger" variant="dark" style={{ marginTop: "0px" }} >
                 <Navbar.Brand href="#">
                     <img
                         src={Logo}
@@ -41,14 +45,18 @@ function Banner() {
                         className="d-inline-block align-top"
                         alt="React Bootstrap logo"
                     />
-
                 </Navbar.Brand>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="mr-auto">
-                        <Nav.Link href="#" className="h5 text-light p-0 m-0">AppName</Nav.Link>
+                <Nav className="mr-auto">
+                    <Nav.Link href="#" className="h5 text-light p-0 m-0">AppName</Nav.Link>
+                </Nav>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav">
+                    <FontAwesomeIcon icon={faUser} color="white" />
+                </Navbar.Toggle >
+
+                <Navbar.Collapse id="responsive-navbar-nav" >
+                    <Nav className="mr-auto ">
                     </Nav>
-                    <Nav>
+                    <Nav >
                         {user ?
                             (<>
                                 <Nav.Link href="/" onClick={(e) => handleLogout(e)} className="text-light">Logout  ({user.name})</Nav.Link>
