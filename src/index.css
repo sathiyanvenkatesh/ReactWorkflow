@@ -28,13 +28,25 @@ code {
 
 .container {
   margin-top:15px;
+  max-width: 900px;
 }
 
 .rdt_TableHeader{
-  font-size: 14px !important;
-  min-height: 0px !important;
-  padding-left: 0px !important;
-  font-weight: bold !important;
+  min-height: 0px!important;
+  padding-left: 0px!important;
+  font-size: 16px!important;
+    
+}
+.rdt_TableHeader>div{
+  font-weight: 700!important;
+  margin-bottom: 10px;;
+}
+h5{
+  font-size: 16px;
+}
+
+.form-group{
+  margin-bottom: 12px;
 }
 
 input[type=checkbox]
