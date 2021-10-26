@@ -27,6 +27,11 @@ function SvcApprove() {
   const [values, setValues] = useState({
     requestId: id, unitManger: svcDetails.unitManger, userId: user.name, remarks: '', accessProvider: '', rarId: ''
   });
+  function NewlineText(props) {
+    const text = props.text;
+    const newText = text.split('\n').map(str => <p>{str}</p>);  
+    return newText;
+  }
   //const allremaks=;
   const set = name => {
     return ({ target: { value } }) => {
@@ -102,19 +107,19 @@ function SvcApprove() {
       'Content-Type': 'application/json;charset=UTF-8',
       'Access-Control-Allow-Origin': "*"
     }
-    if (svcDetails.requestStatus === 'SUB' && svcDetails.unitManagerApprival !== 'ok') {
+    if (localSvcDetails.requestStatus === 'SUB' && localSvcDetails.unitManagerApprival !== 'ok') {
       valuesoption = {
         'approver_Unit_Dev_Mngr': 'Y',
         'remarks': 'ok'
       }
     }
-    if (svcDetails.requestStatus === 'APD2' && values.accessProviderApproval !== 'ok') {
+    if (localSvcDetails.requestStatus === 'APD2' && values.accessProviderApproval !== 'ok') {
       valuesoption = {
         'Access_Provider': 'Y',
         'remarks': 'ok'
       }
     }
-    if (svcDetails.requestStatus === 'APD1' && values.rarApproval !== 'ok') {
+    if (localSvcDetails.requestStatus === 'APD1' && values.rarApproval !== 'ok') {
       valuesoption = {
         'Approver_Risk_Assur_Review': 'Y',
         'remarks': 'ok'
@@ -277,7 +282,9 @@ function SvcApprove() {
           <div className="form-row">
             <div className="form-group col-md-12 ">
               <label htmlFor="allremarks" className="text-danger"><h6>All Remarks</h6></label>              
-              <textarea className="form-control" id="allremaks" value={localSvcDetails.allRemarks}  ></textarea>
+             {/* <textarea className="form-control" id="allremaks" value={localSvcDetails.allRemarks}  ></textarea>*/}
+             {localSvcDetails.allRemarks}
+             <NewlineText text={'Line one\nLine two\nLine three'} />
             </div>
           </div>
           <div className="form-group row p-0 mb-3">

@@ -171,9 +171,9 @@ function SvcUpdate() {
               <div className="panel-body form-group row ">
                 <label htmlFor="unitManger" className="col-sm-3 col-form-label text-danger"><h6>Development Manager </h6></label>
                 <div className="form-check col-sm-3">
-                  <select id="unitManger" className="form-control" value={values.unitManger}   onChange={set('unitManger')}/*onChange={() => {set('unitManger')}}*/ >
-                    <option >Select Dev Manager </option>
-                    {DEVMANAGER.map(m => <option key={m.userid}   >{m.username}</option>)}
+                  {svcDetails.unitManger}
+                  <select id="unitManger" className="form-control" value={values.unitManger}   onChange={set('unitManger')}/*onChange={() => {set('unitManger')}}*/ >                   
+                    {DEVMANAGER.map(m => <option key={m.userid} value={m.userid}  >{m.username}</option>)}
                   </select>
 
                 </div>
