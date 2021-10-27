@@ -48,6 +48,7 @@ function SvcEnquiry() {
 
   const resetForm = () => {
     showTable(false);
+    values.reqid='';
   }
   //if(loading && hasErrors){
 
@@ -128,7 +129,7 @@ function SvcEnquiry() {
 
         <div className="form-group">
           <button type="button" className="btn btn-md btn-danger" onClick={resetForm} >Reset</button> &nbsp;&nbsp;
-          <button type="submit" className="btn btn-primary btn-md" >Search</button>
+          <button type="submit" className="btn btn-dark btn-md" >Search</button>
         </div>
       </form>
       <div >

@@ -191,8 +191,8 @@ function SvcUpdate() {
 
 
           <div className="form-group">
-            <button type="submit" className="btn btn-lg btn-danger"  >Update</button> &nbsp;&nbsp;
-            <button type="button" className="btn btn-danger btn-lg" >Reset</button>
+            <button type="button" className="btn btn-lg btn-danger"  >Back</button> &nbsp;&nbsp;
+            <button type="submit" className="btn btn-dark btn-lg" >Update</button>
 
           </div>
 

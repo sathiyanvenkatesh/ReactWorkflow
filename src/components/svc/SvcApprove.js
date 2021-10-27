@@ -193,7 +193,7 @@ function SvcApprove() {
               </div>
               <label htmlFor="requestdate" className="col-sm-2 col-form-label text-danger"><h6>Request Date</h6></label>
               <div className="col-sm-4">
-                <input type="text" className="form-control" id="requestdate" value={localSvcDetails.requestDate} disabled />
+                <input type="text" className="form-control" id="requestdate" value={ moment(localSvcDetails.requestDate).format("DD/MM/YYYY")} disabled />
               </div>
             </div>
        
@@ -322,8 +322,8 @@ function SvcApprove() {
           </div> 
 
         <div className="form-group mb-4">
-          <button type="button" className="btn btn-md btn-danger"  >Reset</button> &nbsp;&nbsp;
-          <button type="submit" className="btn btn-primary btn-md" >Submit</button>
+          <button type="button" className="btn btn-md btn-danger"  >Back</button> &nbsp;&nbsp;
+          <button type="submit" className="btn btn-dark btn-md" disabled={localSvcDetails.requestStatus==='CLS'} >Submit</button>
         </div>
         </>)
             : (<div>Loading</div>)
