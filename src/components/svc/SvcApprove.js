@@ -29,8 +29,34 @@ function SvcApprove() {
   });
   function NewlineText(props) {
     const text = props.text;
-    const newText = text.split('\n').map(str => <p>{str}</p>);  
+    console.log("text"+text);
+  // const newText = text.split('\n').map(str => <p>{str}</p>); 
+  const newText=<p>{text}</p> 
     return newText;
+  }
+  function getdiscription(text){
+    console.log("status code"+text);
+    var description='';
+    if(text==='APD1'){
+      description="Approved by Unit/Dev Manager"
+    }
+    if(text==='SUB'){
+      description="Submitted"
+    }
+    if(text==='APD2'){
+      description="Approved by Risk & Assurance Review"
+    }
+    if(text==='CLS'){
+      description="Closed"
+    }
+    if(text==='XLD'){
+      description="Cancelled"
+    }
+    if(text==='REJ'){
+      description="Rejected"
+    }
+    return description;
+
   }
   //const allremaks=;
   const set = name => {
@@ -59,7 +85,7 @@ function SvcApprove() {
   const fetchSVCDetailsById = () => {
     dispatch(getSVCbyId(id))
   }
-
+  
   //console.log("svcDetails in update page " + JSON.stringify(svcDetails));
   //console.log(svcDetails.tool);
   /* const [values, setValues] = useState({  
@@ -110,19 +136,19 @@ function SvcApprove() {
     if (localSvcDetails.requestStatus === 'SUB' && localSvcDetails.unitManagerApprival !== 'ok') {
       valuesoption = {
         'approver_Unit_Dev_Mngr': 'Y',
-        'remarks': 'ok'
+        'remarks': values.remarks
       }
     }
     if (localSvcDetails.requestStatus === 'APD2' && values.accessProviderApproval !== 'ok') {
       valuesoption = {
         'Access_Provider': 'Y',
-        'remarks': 'ok'
+        'remarks': values.remarks
       }
     }
     if (localSvcDetails.requestStatus === 'APD1' && values.rarApproval !== 'ok') {
       valuesoption = {
         'Approver_Risk_Assur_Review': 'Y',
-        'remarks': 'ok'
+        'remarks': values.remarks
       }
 
     }
@@ -283,14 +309,15 @@ function SvcApprove() {
             <div className="form-group col-md-12 ">
               <label htmlFor="allremarks" className="text-danger"><h6>All Remarks</h6></label>              
              {/* <textarea className="form-control" id="allremaks" value={localSvcDetails.allRemarks}  ></textarea>*/}
-             {localSvcDetails.allRemarks}
-             <NewlineText text={'Line one\nLine two\nLine three'} />
+            
+             <NewlineText text={localSvcDetails.allRemarks} />
+           {  /*<p>{localSvcDetails.allRemarks}</p>*/}
             </div>
           </div>
           <div className="form-group row p-0 mb-3">
             <label htmlFor="requestStatus" className="col-sm-2 col-form-label text-danger "><h6>Request Status</h6></label>
             <div className="col-sm-4">
-              <span style={localSvcDetails.requestStatus === 'REJ' ? spanstylered : spanstylegreen}>{localSvcDetails.requestStatus}</span>
+              <span style={localSvcDetails.requestStatus === 'REJ' ? spanstylered : spanstylegreen}>{getdiscription(localSvcDetails.requestStatus)}</span>
             </div>
           </div> 
 

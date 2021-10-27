@@ -143,7 +143,7 @@ export function fetchSvcs(values) {
       try {
         
         console.log("svc id to get details"+values);
-         const response = await fetch('https://conv.rakbankonline.ae/eida/svc/api/v1/svcs/'+values)
+         const response = await fetch('https://conv.rakbankonline.ae/eida/svc-local/api/v1/svcs/'+values)
         const data = await response.json()
         console.log("data"+JSON.stringify(data));  
        // axios.get('https://conv.rakbankonline.ae/eida/svc/api/v1/svcs/'+values)
