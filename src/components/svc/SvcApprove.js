@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getSVCbyId, svcsSelector, approveORrejectSucess, approveORrejectFailure } from "../../redux-sclice/SvcSclice";
+import { getSVCbyId, svcsSelector,approveORrejectFailure } from "../../redux-sclice/SvcSclice";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { getOpen, setAlertBox } from '../../redux-sclice/popupwindow'
@@ -99,9 +99,9 @@ function SvcApprove() {
   console.log("values"+JSON.stringify(values));*/
 
 
-  const contaierstyle = {
+  /*const contaierstyle = {
     maxWidth: "1500px"
-  }
+  }*/
   const spanstylegreen = {
     color: "green",
     fontWeight: "bold"
@@ -152,7 +152,7 @@ function SvcApprove() {
       }
 
     }
-    return axios.post('https://conv.rakbankonline.ae/eida/svc-local/api/v1/svc/approveorrejct/' + values.requestId + '/' + "mbshetty", valuesoption, {
+    return axios.post('https://conv.rakbankonline.ae/eida/svc-local/api/v1/svc/approveorrejct/' + values.requestId + '/' + 'mbshetty', valuesoption, {
       headers: headers
     })
   }

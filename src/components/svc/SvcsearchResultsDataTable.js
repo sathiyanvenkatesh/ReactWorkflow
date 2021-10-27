@@ -1,6 +1,6 @@
 import React,{useState,useEffect}  from 'react'
 import DataTable  from "react-data-table-component";
-import {svcsSelector,approveOrRejectSVCRequest,/*fetchSvcs,*/approveORrejectFailure,approveORrejectSucess} from "../../redux-sclice/SvcSclice";
+import {approveORrejectFailure} from "../../redux-sclice/SvcSclice";
 import { svcSearchSelector,fetchSvcs } from "../../redux-sclice/SvcSearchSlice";
 import axios from 'axios';
 
@@ -83,6 +83,30 @@ const customStyles = {
       setValues(oldValues => ({ ...oldValues, [name]: value }));
     }
   };
+  function getDescription(text){
+    console.log("status code"+text);
+    var description='';
+    if(text==='APD1'){
+      description="Approved by Unit/Dev Manager"
+    }
+    if(text==='SUB'){
+      description="Submitted"
+    }
+    if(text==='APD2'){
+      description="Approved by Risk & Assurance Review"
+    }
+    if(text==='CLS'){
+      description="Closed"
+    }
+    if(text==='XLD'){
+      description="Cancelled"
+    }
+    if(text==='REJ'){
+      description="Rejected"
+    }
+    return description;
+
+  }
 
   useEffect(() => {
     console.log("update")
@@ -134,7 +158,7 @@ const customStyles = {
         style: {
           fontSize:'18px'
         },
-        width:"200px"
+        width:"120px"
       },
       {
         name: "Creator Id",
@@ -143,30 +167,31 @@ const customStyles = {
         style: {
           fontSize:'18px' 
         },
-        width:"300px"
+        width:"120px"
       },
       {
-        name: "Request Date",
+        name: "ReqDate",
         selector: "requestDate",
         cell:row =>moment(row.requestDate).format("DD-MM-YYYY"),
         sortable: true,
         right: true,
-        width:"300px"
+        width:"120px"
         
       },
       {
-        name: "Request Status", 
+        name: "Status", 
         selector: "requestStatus",
+        cell:row=>getDescription(row.requestStatus),
         sortable: true,
-        right: true,
-        width:"200px"
+        right: false,
+        width:"150px"
       },
       {
-        name: "Application Name",
+        name: "Application",
         selector: "applicationName",
         sortable: true,
         right: true,
-        width:"250px"
+        width:"150px"
       },
       {
         name:"Action",
