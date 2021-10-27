@@ -16,7 +16,7 @@ function SvcUpdate() {
   const { id } = useParams();
   console.log("id" + id);
   const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store 
-  const { svcDetails, hasErrors,svcupdateresult } = useSelector(svcsSelector)
+  const { svcDetails, svcupdateresult } = useSelector(svcsSelector)
 
   const [values, setValues] = useState({
     requestId: id, unitManger: svcDetails.unitManger, userId: user.name
@@ -49,9 +49,9 @@ function SvcUpdate() {
   //console.log("svcDetails in update page " + JSON.stringify(svcDetails));
   //console.log(svcDetails.tool);
   
-  const contaierstyle = {
+ /* const contaierstyle = {
     maxWidth: "1500px"
-  }
+  }*/
   const spanstylegreen = {
     color: "green",
     fontWeight: "bold"
