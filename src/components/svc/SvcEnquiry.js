@@ -82,7 +82,7 @@ function SvcEnquiry() {
             Request ID:
           </label>
           <div className="col-sm-3">
-            <input type="text" className="form-control" id="reqid" placeholder="Request ID" value={values.requestid} onChange={set('reqid')} />
+            <input type="text" className="form-control" id="reqid" placeholder="Request ID" value={values.requestid} onChange={set('reqid')} autoComplete="off" />
           </div>
           <label htmlFor="reqStatus" className="col-sm-2 col-form-label text-danger"><h6>Request Status:</h6></label>
           <div className="col-sm-3">

@@ -152,7 +152,7 @@ const fetchSVCPaamDetails = () => {
           </div>
           <label htmlFor="version" className="col-sm-2 col-form-label text-danger">Version</label>
           <div className="col-sm-4">
-            <input type="text" className="form-control" id="version" placeholder="Version" value={values.version} onChange={set('version')} required />
+            <input type="text" className="form-control" id="version" placeholder="Version" value={values.version} onChange={set('version')} required  autoComplete="off"/>
           </div>
         </div>
 
