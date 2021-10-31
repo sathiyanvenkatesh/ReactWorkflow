@@ -282,7 +282,32 @@ function SvcApprove() {
               </div>
             </div></div>
          )}
-          { localSvcDetails.requestStatus==='APD2' &&( <div> <div className="form-group row p-0 mb-3">
+          { localSvcDetails.requestStatus==='APD2' &&(
+            
+            <div> 
+              
+              <div className="form-group row p-0 mb-3">
+           <label htmlFor="devmgr" className="col-sm-2 col-form-label text-danger">Risk Assurance Review</label>
+           <div className="form-check col-sm-4">
+             <select id="riskassurancereview" className="form-control" value={rarid}  disabled >
+             <option >Select Access Provider </option>
+             {RISKAPPROER.map(r => <option key={r.key}>{r.value}</option>) }
+             {/* {RISKAPPROER.map((r,index) => <option key={index}>{r}</option>)} */}
+           </select>
+           </div>
+         </div>
+
+         <div className="form-group row p-0 mb-3">
+           <label htmlFor="devmgr" className="col-sm-2 col-form-label text-danger">Reviewed</label>
+           <div className="form-check col-sm-4 d-flex align-items-center">
+           <input className="form-radio-input mr-1" type="radio" value="Y" defaultChecked={localSvcDetails.rarApproval ==='ok'} id="approved" name="rarstatus" />  <span>Yes</span>
+           <input className="form-radio-input ml-2 mr-1" type="radio" value="N" defaultChecked={localSvcDetails.rarApproval !== 'ok'} id="rejected" name="rarstatus" /> <span>No</span>
+           </div>
+         </div>
+              
+              
+              
+              <div className="form-group row p-0 mb-3">
               <label htmlFor="devmgr" className="col-sm-2 col-form-label text-danger">Access Provider</label>
               <div className="form-check col-sm-4">               
                 <select id="accessProvider" className="form-control" value={accessProvider} onChange={set('accessProvider')} >
@@ -299,6 +324,60 @@ function SvcApprove() {
                   </div>
               </div>
           </div>)}
+
+          {
+
+           localSvcDetails.requestStatus==='CLS' && (
+           <div>
+             <div className="form-group row p-0 mb-3">
+           <label htmlFor="devmgr" className="col-sm-2 col-form-label text-danger">Risk Assurance Review</label>
+           <div className="form-check col-sm-4">
+             <select id="riskassurancereview" className="form-control" value={rarid}  disabled >
+             <option >Select Access Provider </option>
+             {RISKAPPROER.map(r => <option key={r.key}>{r.value}</option>) }
+             {/* {RISKAPPROER.map((r,index) => <option key={index}>{r}</option>)} */}
+           </select>
+           </div>
+         </div>
+
+         <div className="form-group row p-0 mb-3">
+           <label htmlFor="devmgr" className="col-sm-2 col-form-label text-danger">Reviewed</label>
+           <div className="form-check col-sm-4 d-flex align-items-center">
+           <input className="form-radio-input mr-1" type="radio" value="Y" defaultChecked={localSvcDetails.rarApproval ==='ok'} id="approved" name="rarstatus" />  <span>Yes</span>
+           <input className="form-radio-input ml-2 mr-1" type="radio" value="N" defaultChecked={localSvcDetails.rarApproval !== 'ok'} id="rejected" name="rarstatus" /> <span>No</span>
+           </div>
+         </div>
+         
+         <div className="form-group row p-0 mb-3">
+              <label htmlFor="devmgr" className="col-sm-2 col-form-label text-danger">Access Provider</label>
+              <div className="form-check col-sm-4">               
+                <select id="accessProvider" className="form-control" value={accessProvider}  disabled >
+                <option >Select Access Provider </option>
+                {VRESIONCONTROLPROVIDER.map(v => <option key={v.key}>{v.value}</option>)}
+              </select>
+              </div>
+            </div>
+              <div className="form-group row p-0 mb-3">
+                  <label htmlFor="devmgr" className="col-sm-2 col-form-label text-danger">Approved</label>
+                  <div className="form-check col-sm-4 d-flex align-items-center">
+                    <input className="form-radio-input mr-1" type="radio" value="Y" defaultChecked={svcDetails.accessProviderApproval === 'ok'} id="approved" name="accstatus" /> <span>Yes</span>
+                    <input className="form-radio-input ml-2 mr-1" type="radio" value="N" defaultChecked={svcDetails.accessProviderApproval !== 'ok'} id="rejected" name="accstatus" /><span>No</span>
+                  </div>
+              </div>
+        
+         
+         
+         
+         </div>
+
+
+
+
+
+
+           )}
+
+
           <div className="form-row">
               <div className="form-group col-md-12 ">
                 <label htmlFor="remarks" className="text-danger"><h6>Remarks</h6></label>
