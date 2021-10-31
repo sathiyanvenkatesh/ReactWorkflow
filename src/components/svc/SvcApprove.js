@@ -357,24 +357,14 @@ function SvcApprove() {
               </select>
               </div>
             </div>
-              <div className="form-group row p-0 mb-3">
+              <div className="form-group row p-0 mb-3">                
                   <label htmlFor="devmgr" className="col-sm-2 col-form-label text-danger">Approved</label>
                   <div className="form-check col-sm-4 d-flex align-items-center">
-                    <input className="form-radio-input mr-1" type="radio" value="Y" defaultChecked={svcDetails.accessProviderApproval === 'ok'} id="approved" name="accstatus" /> <span>Yes</span>
-                    <input className="form-radio-input ml-2 mr-1" type="radio" value="N" defaultChecked={svcDetails.accessProviderApproval !== 'ok'} id="rejected" name="accstatus" /><span>No</span>
+                    <input className="form-radio-input mr-1" type="radio" value="Y" defaultChecked={localSvcDetails.accessProviderApproval === 'ok'} id="approved" name="accstatus" /> <span>Yes</span>
+                    <input className="form-radio-input ml-2 mr-1" type="radio" value="N" defaultChecked={localSvcDetails.accessProviderApproval !== 'ok'} id="rejected" name="accstatus" /><span>No</span>
                   </div>
               </div>
-        
-         
-         
-         
          </div>
-
-
-
-
-
-
            )}
 
 
