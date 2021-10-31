@@ -66,7 +66,7 @@ export function fetchSvcs(values) {
 
         console.log("param 1234"+param);
 
-        const response = await fetch('https://conv.rakbankonline.ae/eida/svc/api/v1/svcs/search?'+param)
+        const response = await fetch('https://conv.rakbankonline.ae/eida/svc-local/api/v1/svcs/search?'+param)
         const data = await response.json()
        console.log("data"+JSON.stringify(data.elements));  
         dispatch(getSvcsSuccess(data.elements))

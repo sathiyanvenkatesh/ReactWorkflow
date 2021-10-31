@@ -25,23 +25,34 @@ function SvcNewRequest() {
     reasonforReq: '', checkOut: "N", checkIn: "N", unitManger: '', checkInReq: "N", deployment: "N", emergencyCheck: "Y", fromArchive: "N", getLatest: "Y",
     toOtherEnv: "N", userId: user.name
   });
+  const [devManager,setDevManager]=useState(null);
 
   const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store   
   const history = useHistory();
   const { svcaddSucessflag, hasErrors, svcaddresult } = useSelector(svcsSelector);
-  const {devmanagers} = useSelector(paramSelector);
+  //const {devmanagers} = useSelector(paramSelector);
   useEffect(() => {
-    fetchSVCPaamDetails()
-    console.log('hi');
+    fetchSVCPaamDetails().then(result=>{
+      console.log("result"+JSON.stringify(result))
+      setDevManager(result);
+      console.log("devManageers"+JSON.stringify(devManager))
+    },error=>{
+
+    })
+   // console.log('hi');      
+   // console.log("hi in devManger"+devManager);
   },[]);
 
-const fetchSVCPaamDetails = () => {
+const fetchSVCPaamDetails = async() => {
   console.log('inside param methos' );
-  dispatch(fetchDevManagers());
-  dispatch(fetchTools());
-  dispatch(fetchApplicationsNames());
-  console.log("hi"+devmanagers);
- 
+  //dispatch(fetchDevManagers());
+  //dispatch(fetchTools());
+  //dispatch(fetchApplicationsNames());  
+      const response = await fetch('https://conv.rakbankonline.ae/eida/svc-local/api/v1/approvals/SVC_UDM')
+        const data = await response.json()
+       // console.log(data);
+   // setDevManager(data);
+   return data
 }
    
   
@@ -207,7 +218,7 @@ const fetchSVCPaamDetails = () => {
           </div>
         </div>
         <div className="form-group ">
-          <button type="button" className="btn btn-md btn-danger"  >Reset</button> &nbsp;&nbsp;
+          <button type="reset" className="btn btn-md btn-danger"  >Reset</button> &nbsp;&nbsp;
           <button type="submit" className="btn btn-primary btn-md" >Submit</button>
         </div>
         <br/>
