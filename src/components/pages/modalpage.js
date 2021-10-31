@@ -36,7 +36,7 @@ const ModalPage = () => {
                         </div>
                         <div className="modal-footer">
                             {message.saveButton && <button type="button" className="btn btn-primary" onClick={() => { dispatch(getClose()) }}>Save changes</button>}
-                            <button type="button" className="btn btn-secondary" onClick={() => { dispatch(getClose()) }}>Close</button>
+                            <button type="button" className="btn btn-dark" onClick={() => { dispatch(getClose()) }}>Close</button>
                         </div>
                     </div>
                 </div>
