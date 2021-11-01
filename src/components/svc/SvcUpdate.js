@@ -33,8 +33,6 @@ function SvcUpdate() {
   useEffect(() => {
     //dispatch(getSVCbyId(id) )
     fetchSVCDetailsById()
-    console.log('hi');
-
   }, []);
 
   const fetchSVCDetailsById = () => {

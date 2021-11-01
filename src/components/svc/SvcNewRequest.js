@@ -10,7 +10,7 @@ import addDays from 'date-fns/addDays';
 
 
 const TOOLS = ['Aldo', 'SVN', 'VSS', 'Git'];
-const APPLICATIONSNAME = ['EFORMS', 'GOAML', 'AECB','RRC','CBWS']
+// const APPLICATIONSNAME = ['EFORMS', 'GOAML', 'AECB','RRC','CBWS']
 //const DEVMANAGER = ['Manager1', 'Manager2']
 const DEVMANAGER = [{"userid":'mbshetty',"username":"Mallika Shetty"},{ "userid":"apillai","username":"Ajit Pillai"},{"userid":"vsathiya","username":"Sathiyan Venkatesh"}]
 
@@ -19,37 +19,83 @@ function SvcNewRequest() {
   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(addDays(new Date(),30));
-  const [reqDate,setReqDate]=useState(new Date())
+  const [reqDate,setReqDate]=useState(new Date());
   const [values, setValues] = useState({
     requestId: '', tool: '', requestorName: user.name, requestDate:reqDate, applicationName: '', version: '', durationFrom:startDate , durationTo:endDate ,
     reasonforReq: '', checkOut: "N", checkIn: "N", unitManger: '', checkInReq: "N", deployment: "N", emergencyCheck: "Y", fromArchive: "N", getLatest: "Y",
     toOtherEnv: "N", userId: user.name
   });
-  const [devManager,setDevManager]=useState(null);
 
+  const initialValue = [
+    {
+      active: true,
+      branch: "705",
+      createUser: "amobaid",
+      createdate: "2010-04-10T08:56:01.653+0000",
+      deptCode: "BANK",
+      designation: "",
+      email_alerts: "YES",
+      emailid: "mbshetty@rakbanktst.ae",
+      locked: 0,
+      modifyDate: "2010-12-14T04:23:09.783+0000",
+      modifyUser: "amobaid",
+      userId: "apillai",
+      username: "Ajit Kumar Pillai"
+    }
+  ];
+
+  const appInitialValue = [
+    {
+      appCode: "AAS",
+      appDesc: "Advance Against Salary",
+      checkerDate: "2014-07-09T07:21:48.690+0000",
+      checkerId: "SYSTEM",
+      makerDate: "2014-07-09T07:21:48.690+0000",
+      makerId: "SYSTEM",
+      requestId: 0
+    }
+  ];
+
+
+  const [application,setApplication] = useState(appInitialValue);
+  const [devManager,setDevManager] = useState(initialValue);
   const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store   
   const history = useHistory();
   const { svcaddSucessflag, hasErrors, svcaddresult } = useSelector(svcsSelector);
-  //const {devmanagers} = useSelector(paramSelector);
+  
   useEffect(() => {
-    fetchSVCPaamDetails().then(result=>{
-      console.log("result"+JSON.stringify(result))
-      setDevManager(result);
-      console.log("devManageers"+JSON.stringify(devManager))
-    },error=>{
+    (async function() {
+      try {
+        const response = await fetch('https://conv.rakbankonline.ae/eida/svc-local/api/v1/approvals/SVC_UDM')
+        const result = await response.json();
+        setDevManager(result);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
 
-    })
-   // console.log('hi');      
-   // console.log("hi in devManger"+devManager);
-  },[]);
+  useEffect(() => {
+    (async function() {
+      try {
+        const response = await fetch('https://conv.rakbankonline.ae/eida/svc-local/api/v1/applications')
+        const result = await response.json();
+        setApplication(result);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, [])
+
+  
 
 const fetchSVCPaamDetails = async() => {
   console.log('inside param methos' );
   //dispatch(fetchDevManagers());
   //dispatch(fetchTools());
   //dispatch(fetchApplicationsNames());  
-      const response = await fetch('https://conv.rakbankonline.ae/eida/svc-local/api/v1/approvals/SVC_UDM')
-        const data = await response.json()
+    const response = await fetch('https://conv.rakbankonline.ae/eida/svc-local/api/v1/approvals/SVC_UDM')
+    const data = await response.json()
        // console.log(data);
    // setDevManager(data);
    return data
@@ -156,9 +202,10 @@ const fetchSVCPaamDetails = async() => {
         <div className="form-group row">
           <label htmlFor="applicationname" className="col-sm-2 col-form-label text-danger ">Application Name</label>
           <div className="col-sm-4">
+          {/* TO DO LIST  */}
             <select id="applicationName" className="form-control" value={values.applicationName} onChange={set('applicationName')}>
               <option >  Select Application   </option>
-              {APPLICATIONSNAME.map(a => <option key={a}>{a}</option>)}
+              {application.map(item => <option key={item.appCode}>{item.appDesc}</option>)}
             </select>
           </div>
           <label htmlFor="version" className="col-sm-2 col-form-label text-danger">Version</label>
@@ -210,9 +257,10 @@ const fetchSVCPaamDetails = async() => {
           <div className="form-group row">
             <label htmlFor="unitManger" className="col-sm-4 col-form-label text-danger">Development Manager</label>
             <div className="form-check col-sm-4">
+              {/* TO DO LIst */}
               <select id="unitManger" className="form-control" value={values.unitManger} onChange={set('unitManger')} >
                 <option >Select Dev Manager </option>
-                {DEVMANAGER.map(m => <option key={m.userid} value={m.userid}>{m.username}</option>)}
+                {devManager.map(m => <option key={m.userid} value={m.userid}>{m.username}</option>)}
               </select>
             </div>
           </div>
