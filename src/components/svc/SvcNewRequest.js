@@ -10,9 +10,7 @@ import addDays from 'date-fns/addDays';
 
 
 const TOOLS = ['Aldo', 'SVN', 'VSS', 'Git'];
-// const APPLICATIONSNAME = ['EFORMS', 'GOAML', 'AECB','RRC','CBWS']
-//const DEVMANAGER = ['Manager1', 'Manager2']
-const DEVMANAGER = [{"userid":'mbshetty',"username":"Mallika Shetty"},{ "userid":"apillai","username":"Ajit Pillai"},{"userid":"vsathiya","username":"Sathiyan Venkatesh"}]
+//const DEVMANAGER = [{"userid":'mbshetty',"username":"Mallika Shetty"},{ "userid":"apillai","username":"Ajit Pillai"},{"userid":"vsathiya","username":"Sathiyan Venkatesh"}]
 
 
 function SvcNewRequest() {
@@ -46,13 +44,13 @@ function SvcNewRequest() {
 
   const appInitialValue = [
     {
-      appCode: "AAS",
+     appCode: "AAS",
       appDesc: "Advance Against Salary",
       checkerDate: "2014-07-09T07:21:48.690+0000",
       checkerId: "SYSTEM",
       makerDate: "2014-07-09T07:21:48.690+0000",
-      makerId: "SYSTEM",
-      requestId: 0
+      makerId: "SYSTEM"
+      
     }
   ];
 
@@ -89,7 +87,7 @@ function SvcNewRequest() {
 
   
 
-const fetchSVCPaamDetails = async() => {
+/*const fetchSVCPaamDetails = async() => {
   console.log('inside param methos' );
   //dispatch(fetchDevManagers());
   //dispatch(fetchTools());
@@ -99,7 +97,7 @@ const fetchSVCPaamDetails = async() => {
        // console.log(data);
    // setDevManager(data);
    return data
-}
+}*/
    
   
   const set = name => {
@@ -143,24 +141,11 @@ const fetchSVCPaamDetails = async() => {
 
   }
   if (svcaddSucessflag && !hasErrors && svcaddresult !== '') {
-    console.log('svcaddresult response' + JSON.stringify(svcaddresult));
-    // <Redirect to='/updatesvc/1000'/>
-    /*  toast.success("SVC Request Created Successfully"+JSON.stringify(svcaddresult),{
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        draggablePercent:80
-        
-       });*/
+    console.log('svcaddresult response' + JSON.stringify(svcaddresult));    
        const payload = {type:"success",headerText:"Info",bodyText:"SVC Request Created Successfully" + JSON.stringify(svcaddresult),saveButton:false};
        dispatch(setAlertBox(payload))
        dispatch(getOpen());
-
-    history.push('/updatesvc/' + JSON.stringify(svcaddresult));
-    // alert("SVC Added Successfully");
-    //<ToastContainer/>
-    // navigate1.navigate('/updatesvc/'+row.requestid)
+    history.push('/updatesvc/' + JSON.stringify(svcaddresult));    
   }
   if (!svcaddSucessflag && hasErrors) {
    
@@ -260,7 +245,7 @@ const fetchSVCPaamDetails = async() => {
               {/* TO DO LIst */}
               <select id="unitManger" className="form-control" value={values.unitManger} onChange={set('unitManger')} >
                 <option >Select Dev Manager </option>
-                {devManager.map(m => <option key={m.userid} value={m.userid}>{m.username}</option>)}
+                {devManager.map(m => <option key={m.userId} value={m.userId} >{m.username}</option>)}
               </select>
             </div>
           </div>

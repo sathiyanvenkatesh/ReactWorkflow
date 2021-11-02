@@ -169,21 +169,10 @@ export function createNewSvcRequest(values){
 return async dispatch =>{
    try{
      console.log("values to pass to api"+values);
-    /* const response=await fetch('https://conv.rakbankonline.ae/eida/svc-local/api/v1/svc',{
-       mode: 'no-cors', 
-      //credentials: 'omit',
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(values)
-    });
-     const data = await response.json()*/
-    /// console.log('data'+data)
     const headers = {
       'Content-Type': 'application/json;charset=UTF-8',
       'Access-Control-Allow-Origin': "*"
     }
-    
-
      axios.post('https://conv.rakbankonline.ae/eida/svc-local/api/v1/svc',values,{
       headers: headers
     })
@@ -192,10 +181,6 @@ return async dispatch =>{
              dispatch(svcAddFailure())
             console.error('There was an error!', error);
         });
-
-
-
-    // dispatch(svcAddSuccess(data))
    }catch(error){
      console.log("error block");
      dispatch(svcAddFailure())
