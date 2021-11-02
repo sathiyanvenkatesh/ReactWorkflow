@@ -74,15 +74,15 @@ const customStyles = {
   const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store
   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
   const userid="apillai";
-  const [values, setValues] = useState({
+  const [values/*, setValues*/] = useState({
     userid: user.name, reqid: '', reqStatus: '', fromdate: '', todate: '', raisedby: '', showall: false
   });
 
-  const set = name => {
+  /*const set = name => {
     return ({ target: { value } }) => {
       setValues(oldValues => ({ ...oldValues, [name]: value }));
     }
-  };
+  };*/
   function getDescription(text){
     console.log("status code"+text);
     var description='';
@@ -191,7 +191,7 @@ const customStyles = {
         selector: "applicationName",
         sortable: true,
         right: true,
-        width:"150px"
+        width:"180px"
       },
       {
         name:"Action",
@@ -199,7 +199,7 @@ const customStyles = {
         ignoreRowClick: true,
         allowOverflow: true,
         button: true,
-        width:"200px"
+        width:"150px"
       }
     ];
   
@@ -214,19 +214,10 @@ const customStyles = {
             fixedHeaderScrollHeight="500px"
             customStyles={customStyles}
         />
-//     <DataTable
-//         columns={columns}
-//         data={svclist}
-//         defaultSortField="title"
-//         pagination
-//         customStyles={customStyles}
-//         noContextMenu // comment this to show itemas selected as alert at the top of table
-//         fixedHeader
-//         fixedHeaderScrollHeight="500px"
-//  /> 
+
     
     )
-  //}
+ 
 }
 
 export default SvcsearchResultsDataTable

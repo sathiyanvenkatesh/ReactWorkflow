@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { createNewSvcRequest, svcsSelector } from "../../redux-sclice/SvcSclice";
-import { paramSelector,fetchDevManagers,fetchTools,fetchApplicationsNames} from "../../redux-sclice/ParamsSlice";
+//import { paramSelector,fetchDevManagers,fetchTools,fetchApplicationsNames} from "../../redux-sclice/ParamsSlice";
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow';
@@ -17,7 +17,7 @@ function SvcNewRequest() {
   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(addDays(new Date(),30));
-  const [reqDate,setReqDate]=useState(new Date());
+  const [reqDate/*,setReqDate*/]=useState(new Date());
   const [values, setValues] = useState({
     requestId: '', tool: '', requestorName: user.name, requestDate:reqDate, applicationName: '', version: '', durationFrom:startDate , durationTo:endDate ,
     reasonforReq: '', checkOut: "N", checkIn: "N", unitManger: '', checkInReq: "N", deployment: "N", emergencyCheck: "Y", fromArchive: "N", getLatest: "Y",

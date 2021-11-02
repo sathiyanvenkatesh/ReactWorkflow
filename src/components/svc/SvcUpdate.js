@@ -7,7 +7,7 @@ import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow'
 import moment from 'moment';
 //const DEVMANAGER = ['mallika', 'apillai','sathiyan']
 
-const DEVMANAGER = [{"userid":'mbshetty',"username":"Mallika Shetty"},{ "userid":"apillai","username":"Ajit Pillai"},{"userid":"vsathiya","username":"Sathiyan Venkatesh"}]
+//const DEVMANAGER = [{"userid":'mbshetty',"username":"Mallika Shetty"},{ "userid":"apillai","username":"Ajit Pillai"},{"userid":"vsathiya","username":"Sathiyan Venkatesh"}]
 
 function SvcUpdate() {
 
@@ -17,9 +17,10 @@ function SvcUpdate() {
   console.log("id" + id);
   const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store 
   const { svcDetails, svcupdateresult } = useSelector(svcsSelector)
+  const {devmger/*,setDevmger*/}=useState(svcDetails.unitManger);
 
   const [values, setValues] = useState({
-    requestId: id, unitManger: svcDetails.unitManger, userId: user.name
+    requestId: id, unitManger: devmger, userId: user.name
   });
 
   const set = name => {
@@ -27,6 +28,35 @@ function SvcUpdate() {
       setValues(oldValues => ({ ...oldValues, [name]: value }));
     }
   };
+  const initialValue = [
+    {
+      active: true,
+      branch: "705",
+      createUser: "amobaid",
+      createdate: "2010-04-10T08:56:01.653+0000",
+      deptCode: "BANK",
+      designation: "",
+      email_alerts: "YES",
+      emailid: "mbshetty@rakbanktst.ae",
+      locked: 0,
+      modifyDate: "2010-12-14T04:23:09.783+0000",
+      modifyUser: "amobaid",
+      userId: "apillai",
+      username: "Ajit Kumar Pillai"
+    }
+  ];
+  const [devManager,setDevManager] = useState(initialValue);
+  useEffect(() => {
+    (async function() {
+      try {
+        const response = await fetch('https://conv.rakbankonline.ae/eida/svc-local/api/v1/approvals/SVC_UDM')
+        const result = await response.json();
+        setDevManager(result);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
 
   
 
@@ -39,6 +69,7 @@ function SvcUpdate() {
     console.log("inside fetchSVCDetailsById");
     const resultAction = dispatch(getSVCbyId(id))
     console.log("resultAction" + resultAction);
+    //setDevmger(svcDetails.unitManger); 
     const originalPromiseResult = unwrapResult(resultAction)
     console.log("originalPromiseResult" + originalPromiseResult);
 
@@ -170,8 +201,9 @@ function SvcUpdate() {
                 <label htmlFor="unitManger" className="col-sm-3 col-form-label text-danger"><h6>Development Manager </h6></label>
                 <div className="form-check col-sm-3">
                   {svcDetails.unitManger}
-                  <select id="unitManger" className="form-control" value={values.unitManger}   onChange={set('unitManger')}/*onChange={() => {set('unitManger')}}*/ >                   
-                    {DEVMANAGER.map(m => <option key={m.userid} value={m.userid}  >{m.username}</option>)}
+                  <select id="unitManger" className="form-control" value={values.unitManger} defaultValue={svcDetails.unitManger}   onChange={set('unitManger')}/*onChange={() => {set('unitManger')}}*/ >                   
+                    {/*DEVMANAGER.map(m => <option key={m.userid} value={m.userid}  >{m.username}</option>)*/}
+                    {devManager.map(m => <option key={m.userId} value={m.userId} >{m.username}</option>)}
                   </select>
 
                 </div>

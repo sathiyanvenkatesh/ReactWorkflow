@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import {fetchSvcs,svcSearchSelector  } from "../../redux-sclice/SvcSearchSlice";
 import { useDispatch, useSelector } from 'react-redux';
 import SvcsearchResultsDataTable from './SvcsearchResultsDataTable';
-import DatePicker from "react-datepicker";
+//import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import addDays from 'date-fns/addDays';
+//import addDays from 'date-fns/addDays';
 
 
 
@@ -17,8 +17,8 @@ function SvcEnquiry() {
   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
 
   const [ tableview, showTable ] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(addDays(new Date(),30));
+  //const [startDate, setStartDate] = useState(new Date());
+  //const [endDate, setEndDate] = useState(addDays(new Date(),30));
   const [values, setValues] = useState({
     userid: user.name, reqid: '', reqStatus: '', fromdate: ''/*startDate*/, todate: ''/*endDate*/, raisedby: '', showall: false
   });
