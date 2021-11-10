@@ -5,19 +5,16 @@ import { useParams } from 'react-router-dom'
 import { unwrapResult } from '@reduxjs/toolkit'
 import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow'
 import moment from 'moment';
-//const DEVMANAGER = ['mallika', 'apillai','sathiyan']
-
-//const DEVMANAGER = [{"userid":'mbshetty',"username":"Mallika Shetty"},{ "userid":"apillai","username":"Ajit Pillai"},{"userid":"vsathiya","username":"Sathiyan Venkatesh"}]
 
 function SvcUpdate() {
-
+  const [localSvcDetails, setsvcDetails] = useState(null);
   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
   //const user=localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
   const { id } = useParams();
   console.log("id" + id);
   const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store 
   const { svcDetails, svcupdateresult } = useSelector(svcsSelector)
-  const {devmger/*,setDevmger*/}=useState(svcDetails.unitManger);
+  const [devmger,setDevmger]=useState(null);
 
   const [values, setValues] = useState({
     requestId: id, unitManger: devmger, userId: user.name
@@ -28,52 +25,46 @@ function SvcUpdate() {
       setValues(oldValues => ({ ...oldValues, [name]: value }));
     }
   };
-  const initialValue = [
-    {
-      active: true,
-      branch: "705",
-      createUser: "amobaid",
-      createdate: "2010-04-10T08:56:01.653+0000",
-      deptCode: "BANK",
-      designation: "",
-      email_alerts: "YES",
-      emailid: "mbshetty@rakbanktst.ae",
-      locked: 0,
-      modifyDate: "2010-12-14T04:23:09.783+0000",
-      modifyUser: "amobaid",
-      userId: "apillai",
-      username: "Ajit Kumar Pillai"
-    }
-  ];
-  const [devManager,setDevManager] = useState(initialValue);
+ 
+  const [devManager,setDevManager] = useState(null);
   useEffect(() => {
-    (async function() {
+    (async () => {
       try {
-        const response = await fetch('https://conv.rakbankonline.ae/eida/svc-local/api/v1/approvals/SVC_UDM')
-        const result = await response.json();
+        const SVC_UDMResponse = await fetch('https://conv.rakbankonline.ae/eida/svc-local/api/v1/approvals/SVC_UDM')
+        const result = await SVC_UDMResponse.json();
+        console.log(result);
+        result.forEach( item => {
+          item.userId = String(item.userId).trimEnd()
+        })
         setDevManager(result);
+        const svcsresponse = await fetch('https://conv.rakbankonline.ae/eida/svc-local/api/v1/svcs/'+id)
+        let data = await svcsresponse.json();
+        console.log("daaa");
+        console.log(String(data.unitManger).trimEnd())
+        setDevmger(String(data.unitManger).trimEnd());
+        setsvcDetails(data);
       } catch (e) {
         console.error(e);
       }
     })();
   }, []);
 
-  
+  // useEffect(() => {
+  //   //dispatch(getSVCbyId(id) )
+  //   fetchSVCDetailsById()
+  // }, []);
 
-  useEffect(() => {
-    //dispatch(getSVCbyId(id) )
-    fetchSVCDetailsById()
-  }, []);
-
-  const fetchSVCDetailsById = () => {
-    console.log("inside fetchSVCDetailsById");
-    const resultAction = dispatch(getSVCbyId(id))
-    console.log("resultAction" + resultAction);
-    //setDevmger(svcDetails.unitManger); 
-    const originalPromiseResult = unwrapResult(resultAction)
-    console.log("originalPromiseResult" + originalPromiseResult);
-
-  }
+  // const fetchSVCDetailsById = () => {
+  //   console.log("inside fetchSVCDetailsById");
+  //   const resultAction = dispatch(getSVCbyId(id))
+  //   console.log(resultAction);
+  //   resultAction.then( (r) => {
+  //     console.log(r)
+  //   })
+  //   //setDevmger(svcDetails.unitManger); 
+  //   const originalPromiseResult = unwrapResult(resultAction)
+  //   console.log("originalPromiseResult" + originalPromiseResult);
+  // }
 
   //console.log("svcDetails in update page " + JSON.stringify(svcDetails));
   //console.log(svcDetails.tool);
@@ -116,60 +107,53 @@ function SvcUpdate() {
       <h5 className="font-weight-bold">SVC Access Request Update Form</h5>
       <div className="mt-4">
         <form onSubmit={handleSubmit}>
+          {localSvcDetails ? (
+            <>
           <div className="form-group row">
             <label htmlFor="requestid" className="col-sm-2 col-form-label text-danger "><h6>Request ID</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="requestid" value={svcDetails.requestId} disabled />
+              <input type="text" className="form-control" id="requestid" value={localSvcDetails?.requestId} disabled />
             </div>
             <label htmlFor="tools" className="col-sm-2 col-form-label text-danger"><h6>Tool</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="requestid" value={svcDetails.tool} disabled />
+              <input type="text" className="form-control" id="requestid" value={localSvcDetails?.tool} disabled />
             </div>
           </div>
-
           <div className="form-group row">
             <label htmlFor="requestorname" className="col-sm-2 col-form-label text-danger "><h6>Requestor Name</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="requestorname" value={svcDetails.requestorName} disabled />
+              <input type="text" className="form-control" id="requestorname" value={localSvcDetails?.requestorName} disabled />
             </div>
             <label htmlFor="requestdate" className="col-sm-2 col-form-label text-danger"><h6>Request Date</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="requestdate" value={ moment(svcDetails.requestDate).format("DD-MM-YYYY")} disabled />
+              <input type="text" className="form-control" id="requestdate" value={ moment(localSvcDetails?.requestDate).format("DD-MM-YYYY")} disabled />
             </div>
           </div>
-
           <div className="form-group row">
             <label htmlFor="applicationname" className="col-sm-2 col-form-label text-danger "><h6>Application Name</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="applicationname" value={svcDetails.applicationName} disabled />
+              <input type="text" className="form-control" id="applicationname" value={localSvcDetails?.applicationName} disabled />
             </div>
             <label htmlFor="version" className="col-sm-2 col-form-label text-danger"><h6>Version</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="version" value={svcDetails.version} disabled />
+              <input type="text" className="form-control" id="version" value={localSvcDetails?.version} disabled />
             </div>
           </div>
-
           <div className="form-group row">
             <label htmlFor="durationfrom" className="col-sm-2 col-form-label text-danger "><h6>Duration From</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="durationfrom" value={moment(svcDetails.durationFrom).format("DD/MM/YYYY")} disabled />
+              <input type="text" className="form-control" id="durationfrom" value={moment(localSvcDetails?.durationFrom).format("DD/MM/YYYY")} disabled />
             </div>
             <label htmlFor="durationto" className="col-sm-2 col-form-label text-danger"><h6>Duration To</h6></label>
             <div className="col-sm-4">
-              <input type="text" className="form-control" id="durationto" value={moment(svcDetails.durationTo).format("DD/MM/YYYY")} disabled />
+              <input type="text" className="form-control" id="durationto" value={moment(localSvcDetails?.durationTo).format("DD/MM/YYYY")} disabled />
             </div>
           </div>
-
-
-
-
-
           <div className="form-row">
             <div className="form-group col-md-12">
               <label htmlFor="description" className="text-danger"><h6>Description/Reason</h6></label>
-              <textarea className="form-control" id="description" value={svcDetails.reasonforReq} disabled ></textarea>
+              <textarea className="form-control" id="description" value={localSvcDetails?.reasonforReq} disabled ></textarea>
             </div>
-
           </div>
           <div className="col-md-12">
             <div className="panel panel-primary">
@@ -180,18 +164,16 @@ function SvcUpdate() {
 
                 <label htmlFor="checkout" className="col-sm-3 col-form-label text-danger"><h6>Check Out </h6></label>
                 <div className="form-check col-sm-3">
-                  <input className="form-check-input" type="checkbox" defaultChecked={svcDetails.checkIn ? 'Y' : 'N'} value={svcDetails.checkOut} id="checkout" disabled />
+                  <input className="form-check-input" type="checkbox" defaultChecked={localSvcDetails?.checkIn ? 'Y' : 'N'} value={localSvcDetails?.checkOut} id="checkout" disabled />
                 </div>
                 <label htmlFor="checkin" className="col-sm-3 col-form-label text-danger"><h6>Check In</h6></label>
                 <div className="form-check col-sm-3">
-                  <input className="form-check-input" type="checkbox" defaultChecked={svcDetails.checkIn ? 'Y' : 'N'} value={svcDetails.checkIn} id="checkin" disabled />
+                  <input className="form-check-input" type="checkbox" defaultChecked={localSvcDetails?.checkIn ? 'Y' : 'N'} value={localSvcDetails?.checkIn} id="checkin" disabled />
                 </div>
 
               </div>
             </div>
           </div>
-
-
           <div className="col-md-12">
             <div className="panel panel-primary">
               <div className="panel-heading">
@@ -199,32 +181,27 @@ function SvcUpdate() {
               </div>
               <div className="panel-body form-group row ">
                 <label htmlFor="unitManger" className="col-sm-3 col-form-label text-danger"><h6>Development Manager </h6></label>
-                <div className="form-check col-sm-3">
-                  {svcDetails.unitManger}
-                  <select id="unitManger" className="form-control" value={values.unitManger} defaultValue={svcDetails.unitManger}   onChange={set('unitManger')}/*onChange={() => {set('unitManger')}}*/ >                   
-                    {/*DEVMANAGER.map(m => <option key={m.userid} value={m.userid}  >{m.username}</option>)*/}
-                    {devManager.map(m => <option key={m.userId} value={m.userId} >{m.username}</option>)}
+                <div className="form-check col-sm-3" >
+                  <select id="unitManger" className="form-control" value={devmger} onChange={set('unitManger')} disabled>                  
+                    {devManager.map((m,index) => <option key={m.userId} value={m.userId}>{m.username}</option>)}
                   </select>
-
+                  
                 </div>
               </div>
             </div>
           </div>
-
-
           <div className="form-group row">
             <label htmlFor="requestStatus" className="col-sm-2 col-form-label text-danger "><h6>Request Status</h6></label>
             <div className="col-sm-4">
-              <span style={svcDetails.requestStatus === 'REJ' ? spanstylered : spanstylegreen}>{svcDetails.requestStatus}</span>
+              <span style={localSvcDetails?.requestStatus === 'REJ' ? spanstylered : spanstylegreen}>{localSvcDetails?.requestStatus}</span>
             </div>
           </div>
-
-
           <div className="form-group">
             <button type="button" className="btn btn-lg btn-danger"  >Back</button> &nbsp;&nbsp;
             <button type="submit" className="btn btn-dark btn-lg" >Update</button>
-
           </div>
+          </>):(<div>Loading</div>)
+          }
 
         </form>
 
