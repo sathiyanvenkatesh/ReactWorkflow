@@ -73,18 +73,18 @@ function SvcApprove() {
       setaccessProvider('ramesh')
       setrarId('sathiyan');
       setsvcDetails(svcDetails.svcDetails);
-      console.log(localSvcDetails)
+      //console.log(localSvcDetails)
     }
   }, [svcDetails])
 
   useEffect(() => {
-    //dispatch(getSVCbyId(id) )
-    fetchSVCDetailsById()
-  }, []);
+    dispatch(getSVCbyId(id) )
+    //fetchSVCDetailsById()
+  }, [id]);
 
-  const fetchSVCDetailsById = () => {
+  /*const fetchSVCDetailsById = () => {
     dispatch(getSVCbyId(id))
-  }
+  }*/
   
   //console.log("svcDetails in update page " + JSON.stringify(svcDetails));
   //console.log(svcDetails.tool);

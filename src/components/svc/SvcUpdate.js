@@ -1,31 +1,30 @@
 import React, { useState, useEffect } from 'react'
-import { getSVCbyId, svcsSelector, udateSvcRequest} from "../../redux-sclice/SvcSclice";
+import {  svcsSelector, udateSvcRequest} from "../../redux-sclice/SvcSclice";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
-import { unwrapResult } from '@reduxjs/toolkit'
+
 import { getOpen,setAlertBox } from '../../redux-sclice/popupwindow'
 import moment from 'moment';
 
 function SvcUpdate() {
   const [localSvcDetails, setsvcDetails] = useState(null);
-  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
-  //const user=localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
+  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null  
   const { id } = useParams();
   console.log("id" + id);
   const dispatch = useDispatch(); // add dispatch function to dipatch action to reducers and update the store 
-  const { svcDetails, svcupdateresult } = useSelector(svcsSelector)
+  const { svcupdateresult } = useSelector(svcsSelector)
   const [devmger,setDevmger]=useState(null);
-
-  const [values, setValues] = useState({
+  const [values] = useState({
     requestId: id, unitManger: devmger, userId: user.name
   });
-
-  const set = name => {
-    return ({ target: { value } }) => {
-      setValues(oldValues => ({ ...oldValues, [name]: value }));
-    }
-  };
- 
+  const handleChange = (e) => {
+    alert(e.target.value);
+    let selectedValue = e.target.value;
+    console.log("selectedValue" + selectedValue);
+    setDevmger(selectedValue);
+    values.unitManger=selectedValue;
+    
+  }
   const [devManager,setDevManager] = useState(null);
   useEffect(() => {
     (async () => {
@@ -47,31 +46,9 @@ function SvcUpdate() {
         console.error(e);
       }
     })();
-  }, []);
+  }, [id]);
 
-  // useEffect(() => {
-  //   //dispatch(getSVCbyId(id) )
-  //   fetchSVCDetailsById()
-  // }, []);
-
-  // const fetchSVCDetailsById = () => {
-  //   console.log("inside fetchSVCDetailsById");
-  //   const resultAction = dispatch(getSVCbyId(id))
-  //   console.log(resultAction);
-  //   resultAction.then( (r) => {
-  //     console.log(r)
-  //   })
-  //   //setDevmger(svcDetails.unitManger); 
-  //   const originalPromiseResult = unwrapResult(resultAction)
-  //   console.log("originalPromiseResult" + originalPromiseResult);
-  // }
-
-  //console.log("svcDetails in update page " + JSON.stringify(svcDetails));
-  //console.log(svcDetails.tool);
   
- /* const contaierstyle = {
-    maxWidth: "1500px"
-  }*/
   const spanstylegreen = {
     color: "green",
     fontWeight: "bold"
@@ -81,27 +58,19 @@ function SvcUpdate() {
     fontWeight: "bold"
   }
 
-  const handleSubmit = event => {
-   // alert('clicked');
+  const handleSubmit = event => {   
     event.preventDefault();
     console.log("Update button clicked ");
-    dispatch(udateSvcRequest(values));
-    //if(handleValidation){
-    // dispatch(createNewSvcRequest(JSON.stringify(values)) )
-    // }
+    dispatch(udateSvcRequest(values));    
     console.log(values);
    if(svcupdateresult!==''){
-      console.log('SVC Update'+svcupdateresult);
-      //console.log('SVC Update'+svcupdateresult);
+      console.log('SVC Update'+svcupdateresult);      
       const payload = {type:"success",headerText:"Info",bodyText:svcupdateresult,saveButton:false};
        dispatch(setAlertBox(payload))
        dispatch(getOpen());
     }
 
   }
-
-
-  //render() {
   return (
     <div className="container">
       <h5 className="font-weight-bold">SVC Access Request Update Form</h5>
@@ -180,9 +149,9 @@ function SvcUpdate() {
                 <label htmlFor="accessrights" className="text-danger">   <h3 className="panel-title">Approvals</h3> </label>
               </div>
               <div className="panel-body form-group row ">
-                <label htmlFor="unitManger" className="col-sm-3 col-form-label text-danger"><h6>Development Manager </h6></label>
+                <label htmlFor="devmger" className="col-sm-3 col-form-label text-danger"><h6>Development Manager </h6></label>
                 <div className="form-check col-sm-3" >
-                  <select id="unitManger" className="form-control" value={devmger} onChange={set('unitManger')} disabled>                  
+                  <select id="devmger" className="form-control" value={devmger} onChange={e => handleChange(e)}>                  
                     {devManager.map((m,index) => <option key={m.userId} value={m.userId}>{m.username}</option>)}
                   </select>
                   
