@@ -152,7 +152,7 @@ function SvcUpdate() {
                 <label htmlFor="devmger" className="col-sm-3 col-form-label text-danger"><h6>Development Manager </h6></label>
                 <div className="form-check col-sm-3" >
                   <select id="devmger" className="form-control" value={devmger} onChange={e => handleChange(e)}>                  
-                    {devManager.map((m,index) => <option key={m.userId} value={m.userId}>{m.username}</option>)}
+                    {devManager.map((m) => <option key={m.userId} value={m.userId}>{m.username}</option>)}
                   </select>
                   
                 </div>
